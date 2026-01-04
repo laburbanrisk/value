@@ -223,7 +223,7 @@
                        <option value="2">2. Tiendas / Depósitos</option>
                        <option value="3">3. Edificios Administrativos</option>
                        <option value="4">4. Salud / Industria</option>
-                   </select>
+                    </select>
                   </div>
                </div>
  
@@ -233,7 +233,7 @@
                     <select id="t2_mat" onchange="t2_calc()" class="w-full p-2.5 border border-slate-200 rounded-lg text-sm font-medium bg-slate-50">
                        <option value="concreto">Concreto / Ladrillo</option>
                        <option value="adobe">Adobe / Quincha</option>
-                   </select>
+                    </select>
                   </div>
                   <div>
                     <label class="text-[11px] font-semibold text-slate-500 block mb-1">ESTADO DE CONSERVACIÓN</label>
@@ -242,7 +242,7 @@
                        <option value="1">Bueno</option>
                        <option value="2">Regular</option>
                        <option value="3">Malo</option>
-                   </select>
+                    </select>
                   </div>
                </div>
                
@@ -489,16 +489,8 @@
     window.addEventListener('load', initT1);
  
     /* -------------------------------------------------------------------------- */
-    /* T2: EDIFICACIÓN (AUDITADO: VALORES OFICIALES 2026 - LIMA/COSTA/SIERRA/SELVA) */
+    /* T2: EDIFICACIÓN (Mantenido Igual - Solo para visualización en Parte 2) */
     /* -------------------------------------------------------------------------- */
-    /* Fuentes Actualizadas:
-       - [cite_start]Lima: Anexo I.1 [cite: 215]
-       - [cite_start]Costa: Anexo I.2 [cite: 119]
-       - [cite_start]Sierra: Anexo I.3 [cite: 243]
-       - [cite_start]Selva: Anexo I.4 [cite: 65]
-       - [cite_start]Obras: Anexos III.1, III.2, III.3, III.4 [cite: 6, 27, 47, 135, 159, 182, 331, 351, 372, 262, 286, 308]
-    */
-
     const T2_CATS_FULL = [
         {l:"1. Muros y Columnas",opts:[
            {l:"A. Estructuras laminares de concreto armado...", v:{lima:976.30, costa:894.27, sierra:1010.95, selva:995.50}},
@@ -633,7 +625,7 @@
         {n:"96. Trampa grasa (m3)", p:{lima:1356.39,costa:1327.80,sierra:1328.54,selva:1369.17}}
     ];
  
-    /* !!! DEPRECIACIÓN - TABLA 01 VIVIENDA (RM N° 172-2016-VIVIENDA) - MANTENIDA SEGÚN INSTRUCCIÓN !!! */
+    // --- FUNCIONES T2 ---
     const DEPREC_TABLE = {
         'concreto': [ 
             { max: 5,  vals: [0, 5, 10, 55] },
@@ -659,7 +651,6 @@
         ]
     };
  
-    // --- FUNCIONES T2 ---
     let t2_added = [];
     
     function t2_refresh() {
@@ -686,19 +677,17 @@
        let u = 0; 
        document.querySelectorAll('.t2-sel').forEach(s => u += parseFloat(s.value));
        
-       // Obtener variables de depreciación
        const age = parseInt(document.getElementById('t2_ant').value) || 0;
        const mat = document.getElementById('t2_mat').value;
        const est = parseInt(document.getElementById('t2_est').value);
        
-       // LÓGICA CORREGIDA: Búsqueda en Matriz
        let dep = 0;
        const table = DEPREC_TABLE[mat] || DEPREC_TABLE['concreto'];
        const range = table.find(r => age <= r.max);
        if(range && range.vals[est] !== undefined) {
           dep = range.vals[est];
        } else {
-          dep = 50; // Fallback
+          dep = 50; 
        }
  
        document.getElementById('t2_deprec_val').innerText = dep + "%";
@@ -735,74 +724,78 @@
       t2_refresh(); 
     }
     
-    // Auto-init
     window.onload = function() { t2_refresh(); t3_init(); initT1(); };
  
     /* -------------------------------------------------------------------------- */
-    /* T3: PRESUPUESTO (AUDITADO: VALORES DICIEMBRE 2025 LIMA) */
+    /* T3: PRESUPUESTO - ACTUALIZADO OFICIAL DICIEMBRE 2025 LIMA METROPOLITANA */
+    /* Fuente: Resolución Directoral N° 00011-2024-VIVIENDA/VMVU-DGPRVU */
     /* -------------------------------------------------------------------------- */
     const T3_CATS = [
        {l:"1. Muros y Columnas",opts:[
-           {l:"A. Estructuras laminares...",v:976.30},
-           {l:"B. Columnas, vigas...",v:629.46},
-           {l:"C. Placas concreto (Espesor 10-15cm)...",v:422.98},
-           {l:"D. Ladrillo s/confinar...",v:409.04},
-           {l:"E. Adobe, tapial...",v:287.96},
-           {l:"F. Madera / Drywall...",v:222.15},
-           {l:"G. Pircado con barro",v:127.78}
+           {l:"A. Estructuras laminares...",v:649.56},
+           {l:"B. Columnas, vigas...",v:394.53},
+           {l:"C. Placas concreto (Espesor 10-15cm)...",v:257.40},
+           {l:"D. Ladrillo s/confinar...",v:212.66},
+           {l:"E. Adobe, tapial...",v:137.44},
+           {l:"F. Madera / Drywall...",v:90.01},
+           {l:"G. Pircado con barro",v:67.63},
+           {l:"H. Madera Rústica",v:36.50},
+           {l:"I. Otros",v:6.13}
        ]},
        {l:"2. Techos",opts:[
-           {l:"A. Losa > 6m / Sobrecarga...",v:592.97},
-           {l:"B. Aligerados inclinados...",v:386.87},
-           {l:"C. Aligerado horizontal...",v:312.01},
-           {l:"D. Calamina metálica...",v:198.04},
-           {l:"E. Madera impermeab...",v:73.83},
-           {l:"F. Calamina madera...",v:41.60},
-           {l:"G. Madera rústica...",v:27.91},
-           {l:"H. Sin techo.",v:0.00}
+           {l:"A. Losa > 6m / Sobrecarga...",v:348.42},
+           {l:"B. Aligerados inclinados...",v:208.83},
+           {l:"C. Aligerado horizontal...",v:137.44},
+           {l:"D. Calamina metálica...",v:90.01},
+           {l:"E. Madera impermeab...",v:50.32},
+           {l:"F. Calamina madera...",v:27.67},
+           {l:"G. Madera rústica...",v:19.03},
+           {l:"H. Sin techo.",v:0.00},
+           {l:"I. Otros",v:0.00}
        ]},
        {l:"3. Pisos",opts:[
            {l:"A. Mármol importado, porcelanato...",v:257.40},
            {l:"B. Mármol nacional, parquet fino...",v:208.83},
-           {l:"C. Parquet de 1ra, Laminado...",v:121.24},
-           {l:"D. Parquet de 2da, loseta veneciana...",v:81.23},
-           {l:"E. Loseta corriente, canto rodado...",v:55.47},
-           {l:"F. Loseta vinílica, cemento bruñado...",v:48.96},
-           {l:"G. Cemento pulido, ladrillo, entablado...",v:36.50},
+           {l:"C. Parquet de 1ra, Laminado...",v:147.81},
+           {l:"D. Parquet de 2da, loseta veneciana...",v:121.24},
+           {l:"E. Loseta corriente, canto rodado...",v:81.23},
+           {l:"F. Loseta vinílica, cemento bruñado...",v:55.47},
+           {l:"G. Cemento pulido, ladrillo, entablado...",v:48.96},
            {l:"H. Madera rústica...",v:26.06},
            {l:"I. Tierra compactada...",v:0.00}
        ]},
        {l:"4. Puertas y Ventanas",opts:[
-           {l:"A. Aluminio pesado, madera fina...",v:529.84},
-           {l:"B. Aluminio diseño, vidrio tratado...",v:279.28},
-           {l:"C. Aluminio, vidrio polarizado...",v:176.22},
-           {l:"D. Ventanas aluminio, puertas selectas...",v:154.35},
-           {l:"E. Ventanas fierro, puertas selectas...",v:132.06},
-           {l:"F. Ventanas fierro industrial...",v:101.56},
-           {l:"G. Madera corriente, marcos PVC...",v:53.56},
-           {l:"H. Madera rústica...",v:26.78},
+           {l:"A. Aluminio pesado, madera fina...",v:379.97},
+           {l:"B. Aluminio diseño, vidrio tratado...",v:287.88},
+           {l:"C. Aluminio, vidrio polarizado...",v:120.09},
+           {l:"D. Ventanas aluminio, puertas selectas...",v:105.20},
+           {l:"E. Ventanas fierro, puertas selectas...",v:67.57},
+           {l:"F. Ventanas fierro industrial...",v:36.50},
+           {l:"G. Madera corriente, marcos PVC...",v:0.00},
+           {l:"H. Madera rústica...",v:0.00},
            {l:"I. Sin puertas.",v:0.00}
        ]},
        {l:"5. Revestimientos",opts:[
            {l:"A. Mármol importado, madera fina...",v:352.52},
-           {l:"B. Mármol nacional, enchape techos...",v:287.88},
-           {l:"C. Superficie caravista, enchape techos...",v:213.57},
-           {l:"D. Enchape madera o laminados...",v:163.86},
+           {l:"B. Mármol nacional, enchape techos...",v:213.57},
+           {l:"C. Superficie caravista, enchape techos...",v:163.86},
+           {l:"D. Enchape madera o laminados...",v:112.53},
            {l:"E. Tarrajeo frotachado, pintura...",v:79.47},
            {l:"F. Estucado yeso/barro...",v:65.16},
            {l:"G. Pintado ladrillo rústico...",v:30.63},
-           {l:"H. Sin revestimiento...",v:10.87},
+           {l:"H. Sin revestimiento...",v:18.25},
            {l:"I. Sin...",v:0.00}
        ]},
        {l:"6. Baños",opts:[
            {l:"A. Baños completos lujo importado...",v:185.81},
            {l:"B. Baños completos importados...",v:128.22},
            {l:"C. Baños completos nacionales...",v:97.49},
-           {l:"D. Baños nacionales blancos...",v:67.63},
-           {l:"E. Baños mayólica blanca parcial...",v:36.08},
-           {l:"F. Baños blancos sin mayólica...",v:21.21},
-           {l:"G. Sanitarios básicos...",v:15.81},
-           {l:"H. Sin aparatos...",v:0.00}
+           {l:"D. Baños nacionales blancos...",v:36.08},
+           {l:"E. Baños mayólica blanca parcial...",v:21.21},
+           {l:"F. Baños blancos sin mayólica...",v:10.87},
+           {l:"G. Sanitarios básicos...",v:0.00},
+           {l:"H. Sin aparatos...",v:0.00},
+           {l:"I. Sin...",v:0.00}
        ]},
        {l:"7. Instalaciones",opts:[
            {l:"A. A/C, Iluminación especial...",v:376.82},
