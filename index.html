@@ -1,229 +1,484 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
   <meta charset="utf-8" />
   <title>Plataforma Técnica de Valoración Urbana 2026</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <style>
-    /* ESTILOS */
-    :root { 
-      --nyc-blue: #002855; 
-      --nyc-yellow: #FFC72C; 
-      --nyc-red: #DA291C; 
-      --nyc-orange: #F97316;
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nyc: {
+              blue: '#002855',
+              yellow: '#FFC72C',
+              red: '#DA291C',
+              orange: '#F97316',
+              dark: '#0f172a',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Oswald', 'sans-serif'],
+          }
+        }
+      }
     }
-    body { font-family: 'Inter', sans-serif; background: #f8fafc; color: #334155; }
-    h1, h2, h3, h4, button, .font-campaign { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.03em; }
+  </script>
 
-    .view-section { display: none; min-height: 100vh; flex-direction: column; animation: fadeIn 0.4s ease-out; }
-    .view-section.active { display: flex; }
-    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-
-    .menu-card { transition: all 0.3s; border-bottom: 6px solid var(--nyc-blue); cursor: pointer; }
-    .menu-card:hover { transform: translateY(-5px); border-color: var(--nyc-red); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); }
+  <style>
+    /* ESTILOS CUSTOM */
+    body { background-color: #f1f5f9; color: #334155; -webkit-font-smoothing: antialiased; }
     
-    input, select { outline: none; border: 1px solid #cbd5e1; transition: all 0.2s; }
-    input:focus, select:focus { border-color: var(--nyc-blue); ring: 2px; outline: 2px solid var(--nyc-yellow); }
+    .view-section { display: none; min-height: 100vh; flex-direction: column; opacity: 0; transition: opacity 0.3s ease-in-out; }
+    .view-section.active { display: flex; opacity: 1; animation: fadeIn 0.4s ease-out forwards; }
+    
+    @keyframes fadeIn { from{opacity:0; transform: translateY(10px);} to{opacity:1; transform: translateY(0);} }
 
-    .custom-scroll::-webkit-scrollbar { width: 8px; }
-    .custom-scroll::-webkit-scrollbar-track { background: #e2e8f0; }
-    .custom-scroll::-webkit-scrollbar-thumb { background: var(--nyc-blue); border-radius: 4px; }
+    /* Scrollbar Personalizado y Limpio */
+    .custom-scroll::-webkit-scrollbar { width: 6px; }
+    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+    .custom-scroll::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 10px; }
+    .custom-scroll::-webkit-scrollbar-thumb:hover { background-color: #94a3b8; }
+
+    /* Inputs Modernos */
+    .input-modern {
+      width: 100%; border: 1px solid #e2e8f0; border-radius: 0.5rem; padding: 0.75rem 1rem;
+      font-size: 0.95rem; font-weight: 500; color: #0f172a; background: #fff;
+      transition: all 0.2s; outline: none;
+    }
+    .input-modern:focus { border-color: #002855; box-shadow: 0 0 0 3px rgba(0, 40, 85, 0.1); }
+    
+    /* Select Personalizado */
+    select.input-modern { appearance: none; background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); background-position: right 0.5rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; padding-right: 2.5rem; }
+
+    /* Utilidades */
+    .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
   </style>
 </head>
 <body>
 
-  <div id="view-landing" class="view-section active bg-slate-50">
-    <header class="bg-[#002855] text-white py-14 px-4 text-center border-b-8 border-[#DA291C] shadow-2xl">
-      <h1 class="text-5xl md:text-7xl font-bold text-[#FFC72C] drop-shadow-[4px_4px_0_#DA291C] mb-4">VALORACIÓN URBANA</h1>
-      <p class="text-xl tracking-widest text-blue-100 font-light">HERRAMIENTAS TÉCNICAS PROFESIONALES 2026</p>
+  <div id="view-landing" class="view-section active bg-slate-100">
+    <header class="relative bg-nyc-blue overflow-hidden pb-10 pt-16 px-6 text-center shadow-2xl border-b-8 border-nyc-red">
+      <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+      <div class="relative z-10 max-w-4xl mx-auto">
+        <h1 class="text-5xl md:text-7xl font-display font-bold text-nyc-yellow drop-shadow-md mb-2">
+          VALORACIÓN URBANA
+        </h1>
+        <div class="h-1 w-24 bg-nyc-red mx-auto mb-4 rounded-full"></div>
+        <p class="text-lg md:text-xl text-blue-100 font-light tracking-wide uppercase">
+          Herramientas Técnicas Profesionales 2026
+        </p>
+      </div>
     </header>
 
-    <main class="flex-1 max-w-7xl mx-auto w-full p-6 flex flex-col justify-center">
-      <div class="grid md:grid-cols-3 gap-8">
-        <div onclick="switchView('view-terreno')" class="menu-card bg-white p-8 rounded-xl shadow-lg text-center group border border-slate-200">
-          <i class="fa-solid fa-map-location-dot text-5xl text-[#002855] mb-4 group-hover:text-[#DA291C]"></i>
-          <h2 class="text-2xl font-bold text-[#002855] mb-4">1. VALOR DEL TERRENO</h2>
-          <p class="text-sm text-slate-600 mb-6">Buscador Oficial MEF. Consulta por distrito/ubigeo y descarga de planos.</p>
-          <button class="bg-[#002855] text-white w-full py-3 rounded font-bold uppercase tracking-wider group-hover:bg-[#DA291C]">INGRESAR</button>
+    <main class="flex-1 w-full max-w-6xl mx-auto p-6 -mt-8 relative z-20">
+      <div class="grid md:grid-cols-3 gap-6">
+        
+        <div onclick="switchView('view-terreno')" class="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer border border-slate-100 relative overflow-hidden transform hover:-translate-y-1">
+          <div class="absolute top-0 left-0 w-full h-2 bg-nyc-blue group-hover:bg-nyc-red transition-colors"></div>
+          <div class="flex justify-center mb-6">
+            <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center group-hover:bg-red-50 transition-colors">
+              <i class="fa-solid fa-map-location-dot text-4xl text-nyc-blue group-hover:text-nyc-red transition-colors"></i>
+            </div>
+          </div>
+          <h2 class="text-2xl font-display font-bold text-nyc-blue text-center mb-3">1. Valor del Terreno</h2>
+          <p class="text-sm text-slate-500 text-center mb-6 leading-relaxed">Buscador Oficial MEF. Consulta por distrito/ubigeo y descarga planos actualizados.</p>
+          <button class="w-full py-3 bg-slate-100 text-nyc-blue font-bold rounded-lg group-hover:bg-nyc-blue group-hover:text-white transition-colors uppercase text-sm tracking-wider">Acceder</button>
         </div>
-        <div onclick="switchView('view-edificacion')" class="menu-card bg-white p-8 rounded-xl shadow-lg text-center group border border-slate-200">
-          <i class="fa-solid fa-building-columns text-5xl text-[#002855] mb-4 group-hover:text-[#DA291C]"></i>
-          <h2 class="text-2xl font-bold text-[#002855] mb-4">2. VALOR EDIFICACIÓN</h2>
-          <p class="text-sm text-slate-600 mb-6">Calculadora Oficial MVCS. Depreciación RM-172-2016 y 96 Partidas a Costo Directo.</p>
-          <button class="bg-[#002855] text-white w-full py-3 rounded font-bold uppercase tracking-wider group-hover:bg-[#DA291C]">INGRESAR</button>
+
+        <div onclick="switchView('view-edificacion')" class="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer border border-slate-100 relative overflow-hidden transform hover:-translate-y-1">
+          <div class="absolute top-0 left-0 w-full h-2 bg-nyc-blue group-hover:bg-nyc-red transition-colors"></div>
+          <div class="flex justify-center mb-6">
+            <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center group-hover:bg-red-50 transition-colors">
+              <i class="fa-solid fa-building-columns text-4xl text-nyc-blue group-hover:text-nyc-red transition-colors"></i>
+            </div>
+          </div>
+          <h2 class="text-2xl font-display font-bold text-nyc-blue text-center mb-3">2. Valor Edificación</h2>
+          <p class="text-sm text-slate-500 text-center mb-6 leading-relaxed">Calculadora Oficial MVCS. Depreciación RM-172-2016 y 96 Partidas a Costo Directo.</p>
+          <button class="w-full py-3 bg-slate-100 text-nyc-blue font-bold rounded-lg group-hover:bg-nyc-blue group-hover:text-white transition-colors uppercase text-sm tracking-wider">Acceder</button>
         </div>
-        <div onclick="switchView('view-presupuesto')" class="menu-card bg-white p-8 rounded-xl shadow-lg text-center group border border-slate-200">
-          <i class="fa-solid fa-calculator text-5xl text-[#002855] mb-4 group-hover:text-[#DA291C]"></i>
-          <h2 class="text-2xl font-bold text-[#002855] mb-4">3. PRESUPUESTO</h2>
-          <p class="text-sm text-slate-600 mb-6">Presupuesto de Obra con Valores Unitarios Oficiales (Diciembre 2025).</p>
-          <button class="bg-[#002855] text-white w-full py-3 rounded font-bold uppercase tracking-wider group-hover:bg-[#DA291C]">INGRESAR</button>
+
+        <div onclick="switchView('view-presupuesto')" class="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer border border-slate-100 relative overflow-hidden transform hover:-translate-y-1">
+          <div class="absolute top-0 left-0 w-full h-2 bg-nyc-blue group-hover:bg-nyc-red transition-colors"></div>
+          <div class="flex justify-center mb-6">
+            <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center group-hover:bg-red-50 transition-colors">
+              <i class="fa-solid fa-calculator text-4xl text-nyc-blue group-hover:text-nyc-red transition-colors"></i>
+            </div>
+          </div>
+          <h2 class="text-2xl font-display font-bold text-nyc-blue text-center mb-3">3. Presupuesto</h2>
+          <p class="text-sm text-slate-500 text-center mb-6 leading-relaxed">Presupuesto Referencial de Obra con Valores Unitarios Oficiales (Dic 2025).</p>
+          <button class="w-full py-3 bg-slate-100 text-nyc-blue font-bold rounded-lg group-hover:bg-nyc-blue group-hover:text-white transition-colors uppercase text-sm tracking-wider">Acceder</button>
         </div>
+
       </div>
     </main>
-    <footer class="bg-[#002855] text-white py-8 border-t-4 border-[#DA291C] text-center">
-      <div class="flex justify-center gap-8 mb-4 text-2xl">
-         <a href="#" class="hover:text-[#FFC72C]"><i class="fa-brands fa-facebook"></i></a>
-         <a href="#" class="hover:text-[#DA291C]"><i class="fa-brands fa-youtube"></i></a>
-         <a href="#" class="hover:text-[#E1306C]"><i class="fa-brands fa-instagram"></i></a>
-         <a href="#" class="hover:text-white"><i class="fa-brands fa-tiktok"></i></a>
+
+    <footer class="bg-nyc-blue text-white py-10 text-center border-t-4 border-nyc-red mt-auto">
+      <div class="flex justify-center gap-6 mb-6">
+         <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-nyc-yellow hover:text-nyc-blue transition-all"><i class="fa-brands fa-facebook-f"></i></a>
+         <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-nyc-red hover:text-white transition-all"><i class="fa-brands fa-youtube"></i></a>
+         <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-pink-600 hover:text-white transition-all"><i class="fa-brands fa-instagram"></i></a>
       </div>
-      <p class="font-campaign text-lg text-[#FFC72C]">LAB URBAN RISK &copy; 2026</p>
+      <p class="font-display tracking-widest text-nyc-yellow opacity-80">LAB URBAN RISK &copy; 2026</p>
     </footer>
   </div>
 
-  <div id="view-terreno" class="view-section bg-slate-100">
-    <nav class="bg-white shadow-md p-3 flex justify-between items-center border-b-4 border-[#002855] sticky top-0 z-[2000]">
-       <div class="flex items-center gap-3"><span class="bg-[#002855] text-[#FFC72C] w-10 h-10 flex items-center justify-center font-bold text-xl rounded">1</span><h2 class="text-[#002855] font-bold text-xl font-campaign hidden md:block">VALORES ARANCELARIOS MEF 2026</h2></div>
-       <button onclick="goHome()" class="bg-[#DA291C] hover:bg-red-700 text-white px-5 py-2 rounded font-bold text-xs uppercase shadow">Menú</button>
-    </nav>
-    <div class="flex-1 w-full max-w-4xl mx-auto p-6 flex flex-col">
-       <div class="bg-white rounded-xl shadow-xl border border-slate-300 p-8 mb-6 text-center">
-          <h3 class="font-campaign text-[#002855] text-3xl mb-2">BUSCADOR NACIONAL</h3>
-          <p class="text-slate-500 mb-6 text-sm">Ingrese Distrito o Ubigeo para descargar el plano oficial.</p>
-          <div class="relative max-w-2xl mx-auto">
-             <input id="t1_search" type="text" class="w-full p-4 pl-12 text-lg border-2 border-slate-300 rounded-full font-bold text-[#002855] uppercase focus:border-[#002855]" placeholder="EJ: MIRAFLORES, 150101...">
-             <i class="fa-solid fa-magnifying-glass absolute left-5 top-5 text-slate-400 text-xl"></i>
-          </div>
+  <div id="view-terreno" class="view-section bg-slate-50">
+    <nav class="glass-nav sticky top-0 z-50 border-b border-slate-200 px-4 py-3 flex justify-between items-center shadow-sm">
+       <div class="flex items-center gap-3">
+         <span class="bg-nyc-blue text-nyc-yellow w-8 h-8 md:w-10 md:h-10 flex items-center justify-center font-display font-bold text-lg rounded-lg shadow-sm">1</span>
+         <h2 class="text-nyc-blue font-display font-bold text-lg md:text-xl leading-none">VALORES ARANCELARIOS <span class="hidden md:inline text-slate-400 font-sans font-normal text-sm ml-2">MEF 2026</span></h2>
        </div>
-       <div class="bg-white rounded-xl shadow-lg border border-slate-300 flex-1 flex flex-col overflow-hidden min-h-[400px]">
-          <div class="p-4 bg-slate-50 border-b flex justify-between items-center"><span class="font-bold text-[#002855] text-xs uppercase">Resultados</span><span class="text-[10px] bg-blue-100 text-blue-800 px-2 py-1 rounded font-bold" id="t1_count">0 encontrados</span></div>
-          <div id="t1_list" class="flex-1 overflow-y-auto custom-scroll p-4 space-y-3">
-             <div class="text-center p-12 opacity-50"><p class="text-slate-400 font-bold">Cargando base de datos...</p></div>
-          </div>
+       <button onclick="goHome()" class="bg-white border border-slate-300 text-slate-600 hover:text-nyc-red hover:border-nyc-red px-4 py-2 rounded-lg font-bold text-xs uppercase transition-colors shadow-sm flex items-center gap-2">
+         <i class="fa-solid fa-arrow-left"></i> Menú
+       </button>
+    </nav>
+
+    <div class="flex-1 w-full max-w-4xl mx-auto p-4 md:p-8 flex flex-col">
+       <div class="bg-white rounded-2xl shadow-xl border border-slate-100 p-8 md:p-12 mb-6 text-center">
+         <span class="inline-block py-1 px-3 rounded-full bg-blue-50 text-nyc-blue text-xs font-bold uppercase tracking-wider mb-4">Base de Datos Nacional</span>
+         <h3 class="font-display text-nyc-blue text-3xl md:text-4xl mb-3 font-bold">BUSCADOR OFICIAL</h3>
+         <p class="text-slate-500 mb-8 max-w-lg mx-auto">Ingrese el nombre del Distrito o el código de Ubigeo para localizar y descargar el plano arancelario vigente.</p>
+         
+         <div class="relative max-w-xl mx-auto group">
+            <input id="t1_search" type="text" class="w-full p-5 pl-14 text-lg border-2 border-slate-200 rounded-full font-bold text-nyc-blue uppercase placeholder-slate-300 focus:border-nyc-blue focus:ring-4 focus:ring-blue-50 transition-all outline-none shadow-sm" placeholder="EJ: MIRAFLORES, 150101...">
+            <i class="fa-solid fa-magnifying-glass absolute left-6 top-6 text-slate-400 text-xl group-focus-within:text-nyc-blue transition-colors"></i>
+         </div>
+       </div>
+
+       <div class="bg-white rounded-2xl shadow-lg border border-slate-200 flex-1 flex flex-col overflow-hidden min-h-[300px]">
+         <div class="px-6 py-4 bg-slate-50 border-b border-slate-100 flex justify-between items-center">
+            <span class="font-bold text-slate-500 text-xs uppercase tracking-wider"><i class="fa-solid fa-list-ul mr-2"></i>Resultados</span>
+            <span class="text-xs bg-nyc-blue text-white px-3 py-1 rounded-full font-bold shadow-sm" id="t1_count">0 encontrados</span>
+         </div>
+         <div id="t1_list" class="flex-1 overflow-y-auto custom-scroll p-4 space-y-2 bg-slate-50/50">
+            <div class="flex flex-col items-center justify-center h-48 opacity-40">
+              <i class="fa-solid fa-database text-4xl mb-3"></i>
+              <p class="text-sm font-bold">Esperando búsqueda...</p>
+            </div>
+         </div>
        </div>
     </div>
   </div>
 
   <div id="view-edificacion" class="view-section bg-slate-100">
-    <nav class="bg-white shadow-md p-3 flex justify-between items-center border-b-4 border-[#002855] sticky top-0 z-[2000]">
-       <div class="flex items-center gap-3"><span class="bg-[#002855] text-[#FFC72C] w-10 h-10 flex items-center justify-center font-bold text-xl rounded">2</span><h2 class="text-[#002855] font-bold text-xl font-campaign hidden md:block">CALCULADORA DE EDIFICACIÓN</h2></div>
-       <button onclick="goHome()" class="bg-[#DA291C] hover:bg-red-700 text-white px-5 py-2 rounded font-bold text-xs uppercase shadow">Menú</button>
-    </nav>
-    <div class="flex-1 w-full max-w-7xl mx-auto p-4 grid md:grid-cols-12 gap-6 h-[calc(100vh-80px)]">
-       <div class="md:col-span-6 bg-white rounded-xl shadow-lg border border-slate-300 flex flex-col overflow-hidden">
-          <div class="p-3 bg-slate-50 border-b flex justify-between items-center">
-             <span class="text-xs font-bold text-[#002855] uppercase">Formulario Técnico Oficial</span>
-             <button onclick="t2_reset()" class="text-[10px] text-red-600 font-bold hover:underline">LIMPIAR</button>
-          </div>
-          <div class="flex-1 overflow-y-auto custom-scroll p-5 space-y-8">
-             <div class="bg-blue-50 p-4 rounded border border-blue-100">
-                <label class="block text-xs font-bold text-[#002855] mb-1">REGIÓN TARIFARIA</label>
-                <select id="t2_region" onchange="t2_refresh()" class="w-full p-2 border border-blue-200 rounded font-bold text-[#002855] bg-white text-sm">
-                   <option value="lima">LIMA METROPOLITANA Y CALLAO</option>
-                   <option value="costa">COSTA (EXCEPTO LIMA/CALLAO)</option>
-                   <option value="sierra">SIERRA</option>
-                   <option value="selva">SELVA</option>
-                </select>
-             </div>
-             <div>
-                <label class="text-xs font-black text-[#002855] uppercase border-b block pb-1 mb-2">A. Datos Generales</label>
-                <div class="mb-3"><label class="text-[10px] font-bold text-slate-500 block mb-1">TIPO DE EDIFICACIÓN</label><select id="t2_tipo_edif" onchange="t2_calc()" class="w-full p-2 border rounded text-xs font-bold bg-white text-slate-700"><option value="1">1. Casa Habitación / Dpto. Vivienda</option><option value="2">2. Tiendas / Depósitos</option><option value="3">3. Edificios Administrativos</option><option value="4">4. Salud / Industria</option></select></div>
-                <div class="grid grid-cols-2 gap-3 mb-2">
-                   <div><label class="text-[10px] font-bold text-slate-500">MATERIAL</label><select id="t2_mat" onchange="t2_calc()" class="w-full p-2 border rounded text-xs font-bold"><option value="concreto">Concreto / Ladrillo</option><option value="adobe">Adobe / Quincha</option></select></div>
-                   <div><label class="text-[10px] font-bold text-slate-500">ESTADO</label><select id="t2_est" onchange="t2_calc()" class="w-full p-2 border rounded text-xs font-bold"><option value="0">Muy Bueno</option><option value="1">Bueno</option><option value="2">Regular</option><option value="3">Malo</option></select></div>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                   <div><label class="text-[10px] font-bold text-slate-500">ANTIGÜEDAD (Años)</label><input type="number" id="t2_ant" value="0" min="0" oninput="t2_calc()" class="w-full p-2 border rounded text-center text-xs font-bold"></div>
-                   <div><label class="text-[10px] font-bold text-blue-600">ÁREA TECHADA (m²)</label><input type="number" id="t2_area" value="100" min="1" oninput="t2_calc()" class="w-full p-2 border-2 border-blue-400 bg-white rounded text-center font-black text-blue-900"></div>
-                </div>
-                <div class="text-right mt-1"><span class="text-[10px] bg-yellow-100 text-yellow-800 px-2 rounded font-bold">Depreciación: <span id="t2_deprec_val">0%</span></span></div>
-             </div>
-             <div>
-                <label class="text-xs font-black text-[#002855] uppercase border-b block pb-1 mb-2">B. Valores Unitarios (3 Rubros)</label>
-                <div id="t2_cats_list" class="space-y-3"></div>
-             </div>
-             <div>
-                <label class="text-xs font-black text-[#002855] uppercase border-b block pb-1 mb-2">C. VALOR UNITARIO A COSTO DIRECTO</label>
-                <div class="flex flex-col gap-2"><select id="t2_obra_sel" class="w-full p-2 border rounded text-xs truncate font-medium"></select><div class="flex gap-2"><input id="t2_obra_qty" type="number" placeholder="Cant." class="w-20 p-2 border rounded text-center text-xs font-bold"><button onclick="t2_addObra()" class="bg-[#002855] text-white px-4 rounded text-xs font-bold hover:bg-black uppercase shadow">AGREGAR</button></div></div>
-                <div id="t2_added_list" class="mt-2 space-y-1"></div>
-             </div>
-             <div class="bg-orange-50 p-4 rounded border border-orange-200"><label class="text-xs font-black text-[#DA291C] uppercase mb-1 block">D. Integración Valor Terreno (S/)</label><input type="number" id="t2_val_terreno" placeholder="0.00" oninput="t2_calc()" class="w-full p-2 input-nyc border-orange-300 text-right font-black text-lg text-[#002855]"><p class="text-[9px] text-right text-slate-500 mt-1 italic">Ingrese el valor obtenido en Herramienta 1.</p></div>
-             <button onclick="t2_calc()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-campaign text-xl py-4 rounded shadow-lg transform active:scale-95 transition-all">CALCULAR AHORA</button>
-          </div>
+    <nav class="glass-nav sticky top-0 z-50 border-b border-slate-200 px-4 py-3 flex justify-between items-center shadow-sm">
+       <div class="flex items-center gap-3">
+         <span class="bg-nyc-blue text-nyc-yellow w-8 h-8 md:w-10 md:h-10 flex items-center justify-center font-display font-bold text-lg rounded-lg shadow-sm">2</span>
+         <h2 class="text-nyc-blue font-display font-bold text-lg md:text-xl leading-none">CALCULADORA <span class="hidden md:inline">EDIFICACIÓN</span></h2>
        </div>
-       <div class="md:col-span-6 flex flex-col h-full">
-          <div class="bg-[#002855] text-white p-8 rounded-xl shadow-2xl flex flex-col justify-center items-center text-center h-full relative border-t-8 border-[#FFC72C]">
-             <h3 class="font-campaign text-[#FFC72C] text-3xl mb-6">VALOR TOTAL DEL PREDIO</h3>
-             <div class="w-full space-y-4 text-sm mb-8 border-b border-white/10 pb-6">
-                <div class="flex justify-between"><span>Edificación (Depreciada)</span><span id="res_edif" class="font-mono font-bold">S/ 0.00</span></div>
-                <div class="flex justify-between"><span>Obras Complementarias</span><span id="res_obras" class="font-mono font-bold">S/ 0.00</span></div>
-                <div class="flex justify-between text-[#DA291C]"><span>Valor Terreno</span><span id="res_terreno" class="font-mono font-bold">S/ 0.00</span></div>
+       <button onclick="goHome()" class="bg-white border border-slate-300 text-slate-600 hover:text-nyc-red hover:border-nyc-red px-4 py-2 rounded-lg font-bold text-xs uppercase transition-colors shadow-sm flex items-center gap-2">
+        <i class="fa-solid fa-arrow-left"></i> Menú
+      </button>
+    </nav>
+
+    <div class="flex-1 w-full max-w-7xl mx-auto p-4 md:p-6 grid lg:grid-cols-12 gap-6 items-start">
+       
+       <div class="lg:col-span-7 bg-white rounded-2xl shadow-lg border border-slate-200 flex flex-col overflow-hidden max-h-[calc(100vh-120px)]">
+         <div class="px-6 py-4 bg-slate-50 border-b border-slate-100 flex justify-between items-center z-10">
+            <span class="text-xs font-bold text-nyc-blue uppercase tracking-wider flex items-center gap-2"><i class="fa-solid fa-sliders"></i> Parámetros Técnicos</span>
+            <button onclick="t2_reset()" class="text-xs text-red-500 font-bold hover:text-red-700 transition-colors flex items-center gap-1"><i class="fa-solid fa-rotate-right"></i> LIMPIAR</button>
+         </div>
+         
+         <div class="flex-1 overflow-y-auto custom-scroll p-6 space-y-8">
+            
+            <div class="bg-blue-50/50 p-5 rounded-xl border border-blue-100">
+               <label class="block text-xs font-bold text-nyc-blue uppercase mb-2">Región Tarifaria</label>
+               <select id="t2_region" onchange="t2_refresh()" class="input-modern border-blue-200 text-nyc-blue font-bold">
+                  <option value="lima">LIMA METROPOLITANA Y CALLAO</option>
+                  <option value="costa">COSTA (EXCEPTO LIMA/CALLAO)</option>
+                  <option value="sierra">SIERRA</option>
+                  <option value="selva">SELVA</option>
+               </select>
+            </div>
+
+            <div class="space-y-4">
+               <div class="flex items-center gap-2 border-b border-slate-200 pb-2">
+                 <span class="bg-nyc-blue text-white w-5 h-5 rounded flex items-center justify-center text-xs font-bold">A</span>
+                 <label class="text-sm font-display font-bold text-nyc-blue uppercase">Datos Generales & Depreciación</label>
+               </div>
+               
+               <div>
+                  <label class="text-xs font-semibold text-slate-500 block mb-1">TIPO DE EDIFICACIÓN</label>
+                  <select id="t2_tipo_edif" onchange="t2_calc()" class="input-modern">
+                    <option value="1">1. Casa Habitación / Dpto. Vivienda</option>
+                    <option value="2">2. Tiendas / Depósitos</option>
+                    <option value="3">3. Edificios Administrativos</option>
+                    <option value="4">4. Salud / Industria</option>
+                  </select>
+               </div>
+
+               <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="text-xs font-semibold text-slate-500 mb-1 block">MATERIAL</label>
+                    <select id="t2_mat" onchange="t2_calc()" class="input-modern">
+                      <option value="concreto">Concreto / Ladrillo</option>
+                      <option value="adobe">Adobe / Quincha</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="text-xs font-semibold text-slate-500 mb-1 block">ESTADO</label>
+                    <select id="t2_est" onchange="t2_calc()" class="input-modern">
+                      <option value="0">Muy Bueno</option>
+                      <option value="1">Bueno</option>
+                      <option value="2">Regular</option>
+                      <option value="3">Malo</option>
+                    </select>
+                  </div>
+               </div>
+               
+               <div class="grid grid-cols-2 gap-4 items-end">
+                  <div>
+                    <label class="text-xs font-semibold text-slate-500 mb-1 block">ANTIGÜEDAD (Años)</label>
+                    <input type="number" id="t2_ant" value="0" min="0" oninput="t2_calc()" class="input-modern text-center font-bold">
+                  </div>
+                  <div>
+                    <label class="text-xs font-bold text-nyc-blue mb-1 block">ÁREA TECHADA (m²)</label>
+                    <input type="number" id="t2_area" value="100" min="1" oninput="t2_calc()" class="input-modern border-nyc-blue bg-blue-50 text-center font-black text-lg text-nyc-blue">
+                  </div>
+               </div>
+               <div class="flex justify-end">
+                 <span class="inline-flex items-center gap-2 bg-amber-100 text-amber-800 px-3 py-1 rounded-lg text-xs font-bold border border-amber-200">
+                   <i class="fa-solid fa-chart-line"></i> Depreciación calculada: <span id="t2_deprec_val" class="text-sm">0%</span>
+                 </span>
+               </div>
+            </div>
+
+            <div class="space-y-4">
+              <div class="flex items-center gap-2 border-b border-slate-200 pb-2">
+                <span class="bg-nyc-blue text-white w-5 h-5 rounded flex items-center justify-center text-xs font-bold">B</span>
+                <label class="text-sm font-display font-bold text-nyc-blue uppercase">Valores Unitarios (Categorías)</label>
+              </div>
+               <div id="t2_cats_list" class="space-y-4">
+                 </div>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+               <div class="flex items-center gap-2 border-b border-slate-200 pb-2 mb-3">
+                 <span class="bg-nyc-blue text-white w-5 h-5 rounded flex items-center justify-center text-xs font-bold">C</span>
+                 <label class="text-sm font-display font-bold text-nyc-blue uppercase">Obras Complementarias</label>
+               </div>
+               
+               <div class="flex flex-col gap-3 mb-3">
+                 <select id="t2_obra_sel" class="input-modern text-xs truncate"></select>
+                 <div class="flex gap-2">
+                   <input id="t2_obra_qty" type="number" placeholder="Cant." class="input-modern w-24 text-center font-bold">
+                   <button onclick="t2_addObra()" class="flex-1 bg-nyc-blue text-white rounded-lg text-xs font-bold hover:bg-slate-800 uppercase shadow-md transition-transform active:scale-95">
+                     <i class="fa-solid fa-plus mr-1"></i> Agregar
+                   </button>
+                 </div>
+               </div>
+               <div id="t2_added_list" class="space-y-2 max-h-40 overflow-y-auto custom-scroll pr-1">
+                 </div>
+            </div>
+
+            <div class="bg-orange-50 p-5 rounded-xl border border-orange-200">
+               <label class="text-xs font-bold text-orange-700 uppercase mb-2 block flex items-center gap-2">
+                 <i class="fa-solid fa-layer-group"></i> D. Integración Valor Terreno (S/)
+               </label>
+               <input type="number" id="t2_val_terreno" placeholder="0.00" oninput="t2_calc()" class="w-full bg-white border-2 border-orange-200 rounded-lg p-3 text-right font-display font-bold text-xl text-nyc-blue outline-none focus:border-orange-400 focus:ring-4 focus:ring-orange-100 transition-all">
+               <p class="text-[10px] text-right text-orange-600/70 mt-2 italic">* Ingrese el valor obtenido en la Herramienta 1.</p>
+            </div>
+            
+            <div class="h-4"></div> </div>
+         <div class="p-4 bg-white border-t border-slate-200 shadow-[0_-5px_15px_rgba(0,0,0,0.05)] z-20">
+            <button onclick="t2_calc()" class="w-full bg-nyc-orange hover:bg-orange-600 text-white font-display text-xl py-4 rounded-xl shadow-lg shadow-orange-200 transform active:scale-95 transition-all flex items-center justify-center gap-2">
+              <i class="fa-solid fa-calculator"></i> CALCULAR TOTAL
+            </button>
+         </div>
+       </div>
+
+       <div class="lg:col-span-5 flex flex-col h-full lg:sticky lg:top-24">
+          <div class="bg-nyc-blue text-white p-8 rounded-3xl shadow-2xl flex flex-col justify-center items-center text-center relative overflow-hidden border-t-8 border-nyc-yellow">
+             <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 pointer-events-none"></div>
+             
+             <h3 class="font-display text-nyc-yellow text-3xl mb-8 relative z-10 tracking-wider">VALOR TOTAL DEL PREDIO</h3>
+             
+             <div class="w-full space-y-4 text-sm mb-8 border-b border-white/10 pb-8 relative z-10">
+                <div class="flex justify-between items-center group">
+                  <span class="text-blue-200 group-hover:text-white transition-colors">Edificación (Depr.)</span>
+                  <span id="res_edif" class="font-mono font-bold text-lg">S/ 0.00</span>
+                </div>
+                <div class="flex justify-between items-center group">
+                  <span class="text-blue-200 group-hover:text-white transition-colors">Obras Comp.</span>
+                  <span id="res_obras" class="font-mono font-bold text-lg">S/ 0.00</span>
+                </div>
+                <div class="flex justify-between items-center group">
+                  <span class="text-orange-300 font-bold group-hover:text-orange-200 transition-colors">Valor Terreno</span>
+                  <span id="res_terreno" class="font-mono font-bold text-lg text-orange-400">S/ 0.00</span>
+                </div>
              </div>
-             <div class="scale-110"><span class="bg-white text-[#002855] px-2 py-1 rounded text-[10px] font-bold uppercase tracking-widest">TOTAL GENERAL</span><div class="text-7xl font-bold font-campaign text-white mt-2 drop-shadow-lg"><span class="text-3xl opacity-50 align-top">S/.</span><span id="res_total">0.00</span></div></div>
-             <div class="mt-8 bg-white/10 px-4 py-1 rounded-full text-xs font-mono">Unitario Edif: <span id="res_unit" class="text-[#FFC72C] font-bold">0.00</span> S/m²</div>
+             
+             <div class="relative z-10 scale-105 mb-4">
+                <span class="bg-white/10 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border border-white/20">Total General</span>
+                <div class="flex items-start justify-center mt-2 font-display font-bold leading-none">
+                  <span class="text-3xl opacity-50 mt-2 mr-1">S/</span>
+                  <span id="res_total" class="text-6xl md:text-7xl text-white drop-shadow-lg">0.00</span>
+                </div>
+             </div>
+             
+             <div class="mt-4 bg-white/5 px-6 py-2 rounded-full text-xs font-mono border border-white/10 relative z-10">
+               Unitario Edif: <span id="res_unit" class="text-nyc-yellow font-bold text-base ml-1">0.00</span> S/m²
+             </div>
+          </div>
+          
+          <div class="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-xl lg:hidden">
+            <p class="text-xs text-yellow-800 text-center flex items-center justify-center gap-2">
+              <i class="fa-solid fa-circle-info"></i> Deslice hacia arriba para editar los valores.
+            </p>
           </div>
        </div>
     </div>
   </div>
 
   <div id="view-presupuesto" class="view-section bg-slate-200">
-    <nav class="bg-white shadow p-3 border-b-4 border-[#002855] flex justify-between items-center sticky top-0 z-[2000]">
-       <div class="flex items-center gap-3"><span class="bg-[#002855] text-[#FFC72C] px-3 py-1 font-bold text-xl rounded">3</span><h2 class="text-[#002855] font-bold text-lg hidden md:block">PRESUPUESTO DE OBRA</h2></div>
-       <button onclick="goHome()" class="bg-[#DA291C] text-white px-4 py-2 rounded font-bold text-xs uppercase shadow hover:bg-red-700 transition">Menú</button>
-    </nav>
-    <div class="flex-1 w-full max-w-7xl mx-auto p-4 grid md:grid-cols-12 gap-6 h-[calc(100vh-80px)]">
-       <div class="md:col-span-5 bg-white rounded-xl shadow border border-slate-300 flex flex-col overflow-hidden">
-          <div class="p-4 bg-slate-50 border-b"><h3 class="font-bold text-[#002855] text-xs uppercase">Configuración de Obra</h3></div>
-          <div class="flex-1 overflow-y-auto custom-scroll p-5 space-y-6">
-             <div>
-                <label class="text-xs font-black text-[#002855] uppercase border-b block pb-1 mb-2">Datos Generales de la Obra</label>
-                <div class="grid grid-cols-2 gap-4">
-                   <div><label class="text-[10px] font-bold block">ÁREA TECHADA (m²)</label><input type="number" id="t3_area" value="100" oninput="t3_calc()" class="w-full p-2 border rounded text-center font-bold"></div>
-                   <div><label class="text-[10px] font-bold block">N° PISOS</label><input type="number" id="t3_pisos" value="1" oninput="t3_calc()" class="w-full p-2 border rounded text-center font-bold"></div>
-                   <div class="col-span-2"><label class="text-[10px] font-bold block">USO</label><select class="w-full p-2 border rounded text-xs"><option>Vivienda Unifamiliar</option><option>Vivienda Multifamiliar</option><option>Comercio / Oficinas</option><option>Educación / Salud</option></select></div>
-                </div>
-             </div>
-             <div>
-                <label class="text-xs font-black text-[#002855] uppercase border-b block pb-1 mb-2">Parámetros y Gastos Generales</label>
-                <div class="grid grid-cols-3 gap-2">
-                   <div><label class="text-[10px] font-bold block">G. GRAL (%)</label><input type="number" id="t3_gg" value="15" oninput="t3_calc()" class="w-full p-2 border rounded text-center font-bold"></div>
-                   <div><label class="text-[10px] font-bold block">UTILIDAD (%)</label><input type="number" id="t3_util" value="10" oninput="t3_calc()" class="w-full p-2 border rounded text-center font-bold"></div>
-                   <div><label class="text-[10px] font-bold block">IGV (%)</label><input type="number" id="t3_igv" value="18" oninput="t3_calc()" class="w-full p-2 border rounded text-center font-bold"></div>
-                </div>
-             </div>
-             <div>
-                <label class="text-xs font-black text-[#002855] uppercase border-b block pb-1 mb-2">7 Valores por Partidas (S/m² Techado)</label>
-                <div id="t3_cats_container" class="space-y-3"></div>
-             </div>
-          </div>
-          <div class="p-4 bg-slate-50 border-t"><button onclick="t3_reset()" class="w-full py-2 bg-slate-200 text-slate-600 rounded text-xs font-bold hover:bg-red-100 hover:text-red-500">REINICIAR PRESUPUESTO</button></div>
-          <div class="p-4 bg-white border-t"><button onclick="t3_calc()" class="w-full py-3 bg-orange-500 text-white rounded text-lg font-bold font-campaign hover:bg-orange-600 shadow">CALCULAR PRESUPUESTO</button></div>
+    <nav class="glass-nav sticky top-0 z-50 border-b border-slate-200 px-4 py-3 flex justify-between items-center shadow-sm">
+       <div class="flex items-center gap-3">
+         <span class="bg-nyc-blue text-nyc-yellow w-8 h-8 md:w-10 md:h-10 flex items-center justify-center font-display font-bold text-lg rounded-lg shadow-sm">3</span>
+         <h2 class="text-nyc-blue font-display font-bold text-lg md:text-xl leading-none">PRESUPUESTO <span class="hidden md:inline">DE OBRA</span></h2>
        </div>
-       <div class="md:col-span-7 bg-[#002855] text-white rounded-xl shadow-2xl p-8 flex flex-col justify-center items-center text-center border-t-8 border-[#FFC72C]">
-          <h4 class="text-[#FFC72C] font-campaign text-3xl mb-8 tracking-widest">COSTO TOTAL OBRA</h4>
-          <div class="w-full space-y-4 text-sm mb-8 border-b border-white/10 pb-8">
-             <div class="flex justify-between"><span>Costo Directo</span><span id="t3_cd" class="font-mono font-bold">S/ 0.00</span></div>
-             <div class="flex justify-between text-slate-300"><span>Gastos Generales + Utilidad</span><span id="t3_gg_util" class="font-mono">S/ 0.00</span></div>
-             <div class="flex justify-between text-slate-300"><span>Subtotal</span><span id="t3_sub" class="font-mono">S/ 0.00</span></div>
-             <div class="flex justify-between text-[#FFC72C]"><span>IGV Total</span><span id="t3_val_igv" class="font-mono">S/ 0.00</span></div>
+       <button onclick="goHome()" class="bg-white border border-slate-300 text-slate-600 hover:text-nyc-red hover:border-nyc-red px-4 py-2 rounded-lg font-bold text-xs uppercase transition-colors shadow-sm flex items-center gap-2">
+        <i class="fa-solid fa-arrow-left"></i> Menú
+      </button>
+    </nav>
+
+    <div class="flex-1 w-full max-w-7xl mx-auto p-4 md:p-6 grid lg:grid-cols-12 gap-6 items-start">
+       
+       <div class="lg:col-span-5 bg-white rounded-2xl shadow-lg border border-slate-200 flex flex-col overflow-hidden max-h-[calc(100vh-120px)]">
+         <div class="px-6 py-4 bg-slate-50 border-b border-slate-100">
+           <h3 class="font-bold text-nyc-blue text-xs uppercase tracking-wider flex items-center gap-2">
+             <i class="fa-solid fa-gear"></i> Configuración de Obra
+           </h3>
+         </div>
+         
+         <div class="flex-1 overflow-y-auto custom-scroll p-6 space-y-6">
+            
+            <div class="space-y-3">
+               <label class="text-xs font-black text-nyc-blue uppercase border-b border-slate-100 block pb-1">Datos Generales</label>
+               <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="text-[10px] font-bold text-slate-500 block mb-1">ÁREA TECHADA (m²)</label>
+                    <input type="number" id="t3_area" value="100" oninput="t3_calc()" class="input-modern text-center font-bold">
+                  </div>
+                  <div>
+                    <label class="text-[10px] font-bold text-slate-500 block mb-1">N° PISOS</label>
+                    <input type="number" id="t3_pisos" value="1" oninput="t3_calc()" class="input-modern text-center font-bold">
+                  </div>
+                  <div class="col-span-2">
+                    <label class="text-[10px] font-bold text-slate-500 block mb-1">USO</label>
+                    <select class="input-modern text-xs">
+                      <option>Vivienda Unifamiliar</option>
+                      <option>Vivienda Multifamiliar</option>
+                      <option>Comercio / Oficinas</option>
+                      <option>Educación / Salud</option>
+                    </select>
+                  </div>
+               </div>
+            </div>
+
+            <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-100">
+               <label class="text-xs font-black text-nyc-blue uppercase block pb-1">Gastos Generales (%)</label>
+               <div class="grid grid-cols-3 gap-2">
+                  <div><label class="text-[10px] font-bold text-slate-400 block text-center">G. GRAL</label><input type="number" id="t3_gg" value="15" oninput="t3_calc()" class="input-modern px-1 text-center font-bold text-xs"></div>
+                  <div><label class="text-[10px] font-bold text-slate-400 block text-center">UTILIDAD</label><input type="number" id="t3_util" value="10" oninput="t3_calc()" class="input-modern px-1 text-center font-bold text-xs"></div>
+                  <div><label class="text-[10px] font-bold text-slate-400 block text-center">IGV</label><input type="number" id="t3_igv" value="18" oninput="t3_calc()" class="input-modern px-1 text-center font-bold text-xs"></div>
+               </div>
+            </div>
+
+            <div class="space-y-4">
+               <label class="text-xs font-black text-nyc-blue uppercase border-b border-slate-100 block pb-1">7 Valores (S/m² Techado)</label>
+               <div id="t3_cats_container" class="space-y-4">
+                 </div>
+            </div>
+         </div>
+         
+         <div class="p-4 bg-white border-t border-slate-200 z-20 flex flex-col gap-3">
+            <button onclick="t3_calc()" class="w-full py-4 bg-nyc-orange text-white rounded-xl text-lg font-bold font-display hover:bg-orange-600 shadow-lg transition-transform active:scale-95 flex justify-center gap-2">
+              <i class="fa-solid fa-coins"></i> CALCULAR
+            </button>
+            <button onclick="t3_reset()" class="w-full py-2 bg-slate-100 text-slate-500 rounded-lg text-xs font-bold hover:bg-red-50 hover:text-red-500 transition-colors">
+              REINICIAR TODO
+            </button>
+         </div>
+       </div>
+
+       <div class="lg:col-span-7 bg-nyc-blue text-white rounded-3xl shadow-2xl p-8 md:p-12 flex flex-col justify-center items-center text-center border-t-8 border-nyc-yellow lg:sticky lg:top-24 relative overflow-hidden">
+          
+          <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')] opacity-5"></div>
+
+          <h4 class="text-nyc-yellow font-display text-4xl mb-10 tracking-widest relative z-10">COSTO TOTAL OBRA</h4>
+          
+          <div class="w-full max-w-lg space-y-5 text-base mb-10 border-b border-white/10 pb-10 relative z-10">
+             <div class="flex justify-between items-center">
+               <span class="text-slate-300">Costo Directo</span>
+               <span id="t3_cd" class="font-mono font-bold text-xl">S/ 0.00</span>
+             </div>
+             <div class="flex justify-between items-center">
+               <span class="text-slate-400 text-sm">Gastos Grales + Utilidad</span>
+               <span id="t3_gg_util" class="font-mono text-slate-200">S/ 0.00</span>
+             </div>
+             <div class="w-full h-px bg-white/10 my-2"></div>
+             <div class="flex justify-between items-center">
+               <span class="text-slate-300">Subtotal</span>
+               <span id="t3_sub" class="font-mono text-lg">S/ 0.00</span>
+             </div>
+             <div class="flex justify-between items-center text-nyc-yellow/80">
+               <span>IGV Total</span>
+               <span id="t3_val_igv" class="font-mono">S/ 0.00</span>
+             </div>
           </div>
-          <div class="text-6xl font-bold font-campaign drop-shadow-lg text-white"><span class="text-2xl opacity-50 align-top">S/.</span><span id="t3_total">0.00</span></div>
-          <p class="text-[10px] text-slate-400 mt-4">* Presupuesto Referencial basado en Valores Unitarios Oficiales a Diciembre 2025.</p>
+          
+          <div class="relative z-10 scale-110">
+             <div class="flex items-start justify-center font-display font-bold leading-none drop-shadow-2xl">
+               <span class="text-3xl opacity-50 mt-2 mr-2">S/.</span>
+               <span id="t3_total" class="text-7xl md:text-8xl text-white">0.00</span>
+             </div>
+          </div>
+          
+          <p class="text-[10px] text-slate-400 mt-8 relative z-10 bg-black/20 px-4 py-2 rounded-full">
+            * Presupuesto Referencial basado en Valores Unitarios Oficiales a Diciembre 2025.
+          </p>
        </div>
     </div>
   </div>
 
   <script>
-    function switchView(id) { document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
+    function switchView(id) { 
+        document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active')); 
+        document.getElementById(id).classList.add('active'); 
+        window.scrollTo(0,0); 
+    }
     function goHome() { switchView('view-landing'); }
 
     /* --- T1: ARANCELES --- */
     let allFeatures = [];
     function initT1() {
         fetch('distritos_mef_2026_con_zip.geojson')
-        .then(r => r.json()).then(data => { allFeatures = data.features; document.getElementById('t1_list').innerHTML = '<div class="text-center p-10 text-xs text-slate-400">Datos cargados.</div>'; })
-        .catch(e => document.getElementById('t1_list').innerHTML = '<div class="text-center p-4 text-red-500 text-xs font-bold">⚠️ Archivo GeoJSON no encontrado.</div>');
+        .then(r => r.json()).then(data => { allFeatures = data.features; document.getElementById('t1_list').innerHTML = '<div class="text-center p-10 text-xs text-slate-400">Datos cargados. Escriba para buscar.</div>'; })
+        .catch(e => document.getElementById('t1_list').innerHTML = '<div class="text-center p-4 text-red-500 text-xs font-bold bg-red-50 rounded border border-red-100">⚠️ Archivo de base de datos no encontrado.</div>');
+        
         document.getElementById('t1_search').addEventListener('input', (e) => {
             const q = e.target.value.toUpperCase();
             if(q.length < 2) return;
             const res = allFeatures.filter(f => (f.properties.distrito||"").includes(q) || (f.properties.ubigeo||"").startsWith(q)).slice(0,50);
-            document.getElementById('t1_list').innerHTML = res.map(r => `<div class="bg-white border p-3 rounded mb-2 shadow-sm flex justify-between items-center"><div><div class="font-bold text-[#002855] text-sm">${r.properties.distrito}</div><div class="text-[10px] text-slate-500">UBIGEO: ${r.properties.ubigeo}</div></div>${r.properties.mef_zip_url ? `<a href="${r.properties.mef_zip_url}" target="_blank" class="text-[10px] bg-[#DA291C] text-white px-3 py-1 rounded font-bold">ZIP</a>`:''}</div>`).join('');
+            
+            // Render optimizado con nuevo estilo
+            document.getElementById('t1_list').innerHTML = res.map(r => `
+              <div class="bg-white border border-slate-200 p-4 rounded-xl mb-3 shadow-sm hover:shadow-md transition-shadow flex justify-between items-center group">
+                <div>
+                   <div class="font-bold text-nyc-blue text-sm group-hover:text-nyc-red transition-colors">${r.properties.distrito}</div>
+                   <div class="text-[10px] text-slate-500 font-mono mt-1 bg-slate-100 inline-block px-2 py-0.5 rounded">UBIGEO: ${r.properties.ubigeo}</div>
+                </div>
+                ${r.properties.mef_zip_url ? `<a href="${r.properties.mef_zip_url}" target="_blank" class="text-[10px] bg-nyc-red hover:bg-red-700 text-white px-4 py-2 rounded-lg font-bold shadow-sm transition-colors flex items-center gap-1"><i class="fa-solid fa-download"></i> ZIP</a>`:''}
+              </div>`).join('');
             document.getElementById('t1_count').innerText = `${res.length} encontrados`;
         });
     }
@@ -259,7 +514,7 @@
        T2_CATS_FULL.forEach(c => {
           let ops = `<option value="0">-- Seleccionar --</option>`;
           c.opts.forEach(o => { if(o.v[reg]!==undefined) ops+=`<option value="${o.v[reg]}">${o.l.substring(0,60)}... S/${o.v[reg]}</option>`; });
-          document.getElementById('t2_cats_list').innerHTML += `<div class="mb-2"><p class="text-[10px] font-bold text-slate-500 uppercase">${c.l}</p><select class="t2-sel w-full p-2 border rounded text-xs text-[#002855] font-bold" onchange="t2_calc()">${ops}</select></div>`;
+          document.getElementById('t2_cats_list').innerHTML += `<div class="mb-3"><p class="text-[10px] font-bold text-slate-500 uppercase mb-1">${c.l}</p><select class="t2-sel input-modern text-xs text-nyc-blue font-bold" onchange="t2_calc()">${ops}</select></div>`;
        });
        document.getElementById('t2_obra_sel').innerHTML = OBRAS_96.map(o=>`<option value="${o.p[reg]}">${o.n} - S/${o.p[reg]}</option>`).join('');
        t2_calc();
@@ -280,12 +535,11 @@
        const s=document.getElementById('t2_obra_sel'), q=document.getElementById('t2_obra_qty').value;
        if(q>0) { t2_added.push({id:Date.now(), n:s.options[s.selectedIndex].text, q, t:s.value*q}); renderAdded(); t2_calc(); }
     }
-    function renderAdded() { document.getElementById('t2_added_list').innerHTML = t2_added.map(x=>`<div class="text-[10px] flex justify-between bg-white p-1 border mb-1"><span>${x.n} (x${x.q})</span><span class="font-bold text-blue-800">S/${x.t.toFixed(2)}</span></div>`).join(''); }
+    function renderAdded() { document.getElementById('t2_added_list').innerHTML = t2_added.map(x=>`<div class="text-xs flex justify-between bg-white p-2 border border-slate-100 rounded-lg shadow-sm"><span>${x.n} <span class="text-slate-400 font-bold">(x${x.q})</span></span><span class="font-bold text-nyc-blue">S/${x.t.toFixed(2)}</span></div>`).join(''); }
     function t2_reset() { t2_added=[]; renderAdded(); document.querySelectorAll('select').forEach(s=>s.selectedIndex=0); t2_refresh(); }
     window.onload = function() { t2_refresh(); t3_init(); initT1(); };
 
     // --- T3: PRESUPUESTO (DATA LIMA DIC 2025) ---
-    // Valores exactos PDF Anexo I.1
     const T3_CATS = [
        {l:"1. Muros y Columnas",opts:[{l:"A. Estructuras laminares...",v:649.56},{l:"B. Columnas, vigas...",v:418.80},{l:"C. Placas concreto...",v:288.29},{l:"D. Ladrillo s/confinar...",v:278.79},{l:"E. Adobe, tapial...",v:196.26},{l:"F. Madera / Drywall...",v:147.81},{l:"G. Pircado con barro",v:87.09}]},
        {l:"2. Techos",opts:[{l:"A. Losa > 6m / Sobrecarga...",v:394.53},{l:"B. Aligerados inclinados...",v:257.40},{l:"C. Aligerado horizontal...",v:208.83},{l:"D. Calamina metálica...",v:137.44},{l:"E. Madera impermeab...",v:50.32},{l:"F. Calamina madera...",v:27.67},{l:"G. Madera rústica...",v:19.03},{l:"H. Sin techo.",v:0.00}]},
@@ -298,7 +552,7 @@
 
     function t3_init() {
        const c = document.getElementById('t3_cats_container');
-       c.innerHTML = T3_CATS.map(x => `<div><label class="text-[10px] font-bold text-slate-500 uppercase">${x.l}</label><select class="t3-sel w-full p-2 border rounded text-xs" onchange="t3_calc()"><option value="0">--</option>${x.opts.map(o=>`<option value="${o.v}">${o.l} S/${o.v.toFixed(2)}</option>`).join('')}</select></div>`).join('');
+       c.innerHTML = T3_CATS.map(x => `<div><label class="text-[10px] font-bold text-slate-500 uppercase mb-1 block">${x.l}</label><select class="t3-sel input-modern text-xs" onchange="t3_calc()"><option value="0">--</option>${x.opts.map(o=>`<option value="${o.v}">${o.l} S/${o.v.toFixed(2)}</option>`).join('')}</select></div>`).join('');
     }
     function t3_calc() {
        let u=0; document.querySelectorAll('.t3-sel').forEach(s=>u+=parseFloat(s.value));
