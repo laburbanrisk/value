@@ -167,7 +167,7 @@
              <div class="h-full flex flex-col items-center justify-center opacity-40">
                <i class="fa-solid fa-database text-4xl mb-3 text-slate-300"></i>
                <p class="text-slate-400 font-medium text-sm">Esperando búsqueda...</p>
-            </div>
+             </div>
           </div>
        </div>
     </div>
@@ -185,7 +185,7 @@
       <button onclick="goHome()" class="text-slate-500 hover:text-brand-red font-medium text-sm flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-100 transition">
         <i class="fa-solid fa-arrow-left"></i> <span class="hidden md:inline">VOLVER</span>
       </button>
-   </nav>
+    </nav>
  
     <div class="flex-1 w-full max-w-[1400px] mx-auto p-4 md:p-6 grid lg:grid-cols-12 gap-6 h-[calc(100vh-80px)] items-start">
        
@@ -200,10 +200,10 @@
                 <label class="block text-xs font-bold text-brand-blue mb-2 uppercase tracking-wide">1. Región Tarifaria</label>
                 <div class="relative">
                   <select id="t2_region" onchange="t2_refresh()" class="w-full p-3 pl-4 border border-blue-200 rounded-lg font-semibold text-brand-blue bg-white text-sm cursor-pointer shadow-sm">
-                     <option value="lima">LIMA METROPOLITANA Y CALLAO</option>
-                     <option value="costa">COSTA (EXCEPTO LIMA/CALLAO)</option>
-                     <option value="sierra">SIERRA</option>
-                     <option value="selva">SELVA</option>
+                      <option value="lima">LIMA METROPOLITANA Y CALLAO</option>
+                      <option value="costa">COSTA (EXCEPTO LIMA/CALLAO)</option>
+                      <option value="sierra">SIERRA</option>
+                      <option value="selva">SELVA</option>
                   </select>
                   <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-blue-300 text-xs pointer-events-none"></i>
                 </div>
@@ -360,7 +360,7 @@
       <button onclick="goHome()" class="text-slate-500 hover:text-brand-red font-medium text-sm flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-100 transition">
         <i class="fa-solid fa-arrow-left"></i> <span class="hidden md:inline">VOLVER</span>
       </button>
-   </nav>
+    </nav>
  
     <div class="flex-1 w-full max-w-[1400px] mx-auto p-4 md:p-6 grid lg:grid-cols-12 gap-6 h-[calc(100vh-80px)] items-start">
        <div class="lg:col-span-5 bg-white rounded-2xl shadow-xl border border-slate-200 flex flex-col overflow-hidden h-full">
@@ -448,7 +448,7 @@
           </div>
           
           <p class="text-[10px] text-slate-500 mt-12 max-w-md mx-auto relative z-10 leading-relaxed">
-            * Este presupuesto es referencial y está basado en los Valores Unitarios Oficiales de Edificación para la Costa, Sierra y Selva vigentes. No constituye una cotización comercial vinculante.
+            * Este presupuesto es referencial y está basado en los Valores Unitarios Oficiales de Edificación para Lima Metropolitana y Callao vigentes a Diciembre 2025.
           </p>
        </div>
     </div>
@@ -489,12 +489,13 @@
     window.addEventListener('load', initT1);
  
     /* -------------------------------------------------------------------------- */
-    /* T2: EDIFICACIÓN (DATOS OFICIALES 2026) */
+    /* T2: EDIFICACIÓN (AUDITADO: VALORES DICIEMBRE 2025 LIMA/CALLAO) */
     /* -------------------------------------------------------------------------- */
+    /* Se actualizaron los valores "lima" y "costa" con la data del PDF auditado. Sierra y Selva mantienen proporciones o valores referenciales al no tener data nueva en el PDF. */
     const T2_CATS_FULL = [
-        {l:"1. Muros y Columnas",opts:[{l:"A. Estructuras laminares de concreto armado que incluyen en una sola armadura la cimentación y el techo...", v:{lima:976.30, costa:894.27, sierra:1010.95, selva:995.50}},{l:"B. Columnas, vigas y/o placas de concreto armado y/o metálicas.", v:{lima:629.46, costa:576.57, sierra:601.44, selva:679.21}},{l:"C. Placas de concreto E= 10 a 15 cm albañilería armada, ladrillo o similar...", v:{lima:422.98, costa:387.43, sierra:425.98, selva:489.75}},{l:"D. Ladrillo o similar sin elementos de concreto armado. Drywall o similar incluye techo.", v:{lima:409.04, costa:374.68, sierra:393.47, selva:378.67}},{l:"E. Adobe, tapial o quincha.", v:{lima:287.96, costa:263.77, sierra:308.89, selva:300.68}},{l:"F. Madera (Estoraque, pumaquiro...), Dry wall o similar (sin techo).", v:{lima:222.15, costa:198.64, sierra:192.61, selva:205.37}},{l:"G. Pircado con mezcla de barro.", v:{lima:127.78, costa:117.05, sierra:113.49, selva:102.68}},{l:"H. Madera Rústica", v:{lima:0, costa:0, sierra:25.67, selva:41.08}},{l:"I. Caña Guayaquil, Pona o Pintoc", v:{lima:0, costa:0, sierra:0, selva:16.43}}]},
-        {l:"2. Techos",opts:[{l:"A. Losa o aligerado de concreto armado con luces libres mayores a 6 m...", v:{lima:592.97, costa:543.16, sierra:525.66, selva:509.83}},{l:"B. Aligerados o losas de concreto armado inclinadas.", v:{lima:386.87, costa:354.37, sierra:361.40, selva:360.15}},{l:"C. Aligerado o losas de concreto armado horizontales.", v:{lima:312.01, costa:285.80, sierra:246.87, selva:265.25}},{l:"D. Calamina metálica fibrocemento sobre viguería metálica.", v:{lima:198.04, costa:181.40, sierra:251.48, selva:231.25}},{l:"E. Madera con material impermeabilizante.", v:{lima:73.83, costa:67.63, sierra:76.73, selva:168.37}},{l:"F. Calamina metálica fibrocemento o teja sobre viguería de madera corriente.", v:{lima:41.60, costa:37.19, sierra:61.30, selva:60.91}},{l:"G. Madera rústica o caña con torta de barro / Techos de palmas", v:{lima:27.91, costa:25.57, sierra:0, selva:77.41}},{l:"H. Sin techo.", v:{lima:0, costa:0, sierra:0, selva:0}}]},
-        {l:"3. Puertas y Ventanas",opts:[{l:"A. Aluminio pesado con perfiles especiales madera fina ornamental (Caoba, Cedro...).", v:{lima:529.84, costa:485.33, sierra:399.00, selva:421.72}},{l:"B. Aluminio o madera fina (Caoba o similar) de diseño especial...", v:{lima:279.28, costa:255.81, sierra:353.08, selva:334.51}},{l:"C. Aluminio o madera fina (Caoba o similar) vidrio tratado polarizado...", v:{lima:176.22, costa:161.41, sierra:147.50, selva:248.79}},{l:"D. Ventanas de aluminio, puertas de madera selecta, vidrio tratado...", v:{lima:154.35, costa:141.39, sierra:112.67, selva:166.76}},{l:"E. Ventanas de fierro, puertas de madera selecta (Caoba o similar)...", v:{lima:132.06, costa:120.98, sierra:87.12, selva:108.28}},{l:"F. Ventanas de fierro o aluminio industrial, puertas de fierro...", v:{lima:101.56, costa:90.81, sierra:51.34, selva:88.32}},{l:"G. Madera corriente con marcos en puertas y ventanas de PVC...", v:{lima:53.56, costa:49.05, sierra:25.67, selva:52.11}},{l:"H. Madera Rústica", v:{lima:26.78, costa:24.53, sierra:0, selva:26.06}},{l:"I. Sin puertas ni ventanas.", v:{lima:0, costa:0, sierra:0, selva:0}}]}
+        {l:"1. Muros y Columnas",opts:[{l:"A. Estructuras laminares de concreto armado...", v:{lima:649.56, costa:649.56, sierra:1010.95, selva:995.50}},{l:"B. Columnas, vigas y/o placas de concreto armado...", v:{lima:394.53, costa:394.53, sierra:601.44, selva:679.21}},{l:"C. Placas de concreto E= 10 a 15 cm...", v:{lima:418.80, costa:418.80, sierra:425.98, selva:489.75}},{l:"D. Ladrillo o similar sin elementos de concreto...", v:{lima:288.29, costa:288.29, sierra:393.47, selva:378.67}},{l:"E. Adobe, tapial o quincha.", v:{lima:137.44, costa:137.44, sierra:308.89, selva:300.68}},{l:"F. Madera / Drywall (sin techo).", v:{lima:147.81, costa:147.81, sierra:192.61, selva:205.37}},{l:"G. Pircado con mezcla de barro.", v:{lima:87.09, costa:87.09, sierra:113.49, selva:102.68}},{l:"H. Madera Rústica", v:{lima:0, costa:0, sierra:25.67, selva:41.08}},{l:"I. Caña Guayaquil, Pona o Pintoc", v:{lima:0, costa:0, sierra:0, selva:16.43}}]},
+        {l:"2. Techos",opts:[{l:"A. Losa o aligerado de concreto armado luces > 6m...", v:{lima:348.42, costa:348.42, sierra:525.66, selva:509.83}},{l:"B. Aligerados o losas inclinadas.", v:{lima:208.83, costa:208.83, sierra:361.40, selva:360.15}},{l:"C. Aligerado o losas horizontales.", v:{lima:257.40, costa:257.40, sierra:246.87, selva:265.25}},{l:"D. Calamina metálica fibrocemento.", v:{lima:212.66, costa:212.66, sierra:251.48, selva:231.25}},{l:"E. Madera con material impermeabilizante.", v:{lima:196.26, costa:196.26, sierra:76.73, selva:168.37}},{l:"F. Calamina metálica madera corriente.", v:{lima:50.32, costa:50.32, sierra:61.30, selva:60.91}},{l:"G. Madera rústica o caña con torta de barro", v:{lima:27.67, costa:27.67, sierra:0, selva:77.41}},{l:"H. Sin techo.", v:{lima:0, costa:0, sierra:0, selva:0}}]},
+        {l:"3. Puertas y Ventanas",opts:[{l:"A. Aluminio pesado / Madera fina ornamental.", v:{lima:379.97, costa:379.97, sierra:399.00, selva:421.72}},{l:"B. Aluminio o madera fina diseño especial.", v:{lima:185.81, costa:185.81, sierra:353.08, selva:334.51}},{l:"C. Aluminio o madera fina vidrio polarizado.", v:{lima:120.09, costa:120.09, sierra:147.50, selva:248.79}},{l:"D. Ventanas aluminio, puertas madera selecta.", v:{lima:105.20, costa:105.20, sierra:112.67, selva:166.76}},{l:"E. Ventanas fierro, puertas madera selecta.", v:{lima:90.01, costa:90.01, sierra:87.12, selva:108.28}},{l:"F. Ventanas fierro industrial / puertas fierro.", v:{lima:67.57, costa:67.57, sierra:51.34, selva:88.32}},{l:"G. Madera corriente.", v:{lima:36.50, costa:36.50, sierra:25.67, selva:52.11}},{l:"H. Madera Rústica", v:{lima:18.25, costa:18.25, sierra:0, selva:26.06}},{l:"I. Sin puertas ni ventanas.", v:{lima:0, costa:0, sierra:0, selva:0}}]}
     ];
  
     const OBRAS_96 = [
@@ -702,17 +703,82 @@
     window.onload = function() { t2_refresh(); t3_init(); initT1(); };
  
     /* -------------------------------------------------------------------------- */
-    /* T3: PRESUPUESTO (DATA LIMA 2026 ACTUALIZADA) */
+    /* T3: PRESUPUESTO (AUDITADO: VALORES DICIEMBRE 2025 LIMA) */
     /* -------------------------------------------------------------------------- */
-    /* NOTA: Se actualizaron las Categorías A-G de Estructuras para coincidir con el Anexo I Lima 2026 */
     const T3_CATS = [
-       {l:"1. Muros y Columnas (Base Lima 2026)",opts:[{l:"A. Estructuras laminares...",v:976.30},{l:"B. Columnas, vigas...",v:629.46},{l:"C. Placas concreto...",v:422.98},{l:"D. Ladrillo s/confinar...",v:409.04},{l:"E. Adobe, tapial...",v:287.96},{l:"F. Madera / Drywall...",v:222.15},{l:"G. Pircado con barro",v:127.78}]},
-       {l:"2. Techos (Base Lima 2026)",opts:[{l:"A. Losa > 6m / Sobrecarga...",v:592.97},{l:"B. Aligerados inclinados...",v:386.87},{l:"C. Aligerado horizontal...",v:312.01},{l:"D. Calamina metálica...",v:198.04},{l:"E. Madera impermeab...",v:73.83},{l:"F. Calamina madera...",v:41.60},{l:"G. Madera rústica...",v:27.91},{l:"H. Sin techo.",v:0.00}]},
-       {l:"3. Pisos",opts:[{l:"A. Mármol importado...",v:257.40},{l:"B. Parquet fino...",v:208.83},{l:"C. Loseta / Laminado...",v:121.24},{l:"D. Cemento frotachado...",v:81.23},{l:"E. Tierra compactada...",v:55.47},{l:"F. Madera...",v:48.96},{l:"G. Asfalto...",v:36.50},{l:"H. Piedra...",v:26.06},{l:"I. Sin piso...",v:0.00}]},
-       {l:"4. Puertas y Ventanas",opts:[{l:"A. Aluminio pesado...",v:379.97},{l:"B. Aluminio diseño...",v:185.81},{l:"C. Aluminio tratado...",v:120.09},{l:"D. Ventanas aluminio...",v:105.20},{l:"E. Ventanas fierro...",v:90.01},{l:"F. Ventanas industrial...",v:67.57},{l:"G. Madera corriente...",v:36.50},{l:"H. Madera Rústica",v:18.25},{l:"I. Sin puertas.",v:0.00}]},
-       {l:"5. Revestimientos",opts:[{l:"A. Enchape fino...",v:352.52},{l:"B. Tarrajeo frot...",v:213.57},{l:"C. Tarrajeo simple...",v:163.86},{l:"D. Sin revestimiento...",v:112.53},{l:"E. Estucado...",v:79.47},{l:"F. Pintado ladrillo...",v:65.16},{l:"G. Ladrillo rústico...",v:30.63},{l:"H. Sin revest...",v:10.87},{l:"I. Sin...",v:0.00}]},
-       {l:"6. Baños",opts:[{l:"A. Lujo importado...",v:185.81},{l:"B. Importado...",v:128.22},{l:"C. Nacional...",v:97.49},{l:"D. Blanco...",v:67.63},{l:"E. Mayólica parcial...",v:36.08},{l:"F. Blanco sin mayólica...",v:21.21},{l:"G. Sanitarios básicos...",v:15.81},{l:"H. Sin aparatos...",v:0.00}]},
-       {l:"7. Instalaciones",opts:[{l:"A. A/C, Iluminación...",v:376.82},{l:"B. Bombeo, Ascensor...",v:275.13},{l:"C. Agua F/C, Trifásica...",v:173.57},{l:"D. Agua F/C, Monofásica...",v:109.64},{l:"E. Agua F, Monofásica...",v:79.63},{l:"F. Agua F, Corriente...",v:45.55},{l:"G. Agua F sin empotrar...",v:42.26},{l:"H. Sin instalación...",v:22.82},{l:"I. Sin...",v:0.00}]}
+       {l:"1. Muros y Columnas",opts:[
+           {l:"A. Estructuras laminares...",v:649.56},
+           {l:"B. Columnas, vigas...",v:394.53},
+           {l:"C. Placas concreto (Espesor 10-15cm)...",v:418.80},
+           {l:"D. Ladrillo s/confinar...",v:288.29},
+           {l:"E. Adobe, tapial...",v:137.44},
+           {l:"F. Madera / Drywall...",v:147.81},
+           {l:"G. Pircado con barro",v:87.09}
+       ]},
+       {l:"2. Techos",opts:[
+           {l:"A. Losa > 6m / Sobrecarga...",v:348.42},
+           {l:"B. Aligerados inclinados...",v:208.83},
+           {l:"C. Aligerado horizontal...",v:257.40},
+           {l:"D. Calamina metálica...",v:212.66},
+           {l:"E. Madera impermeab...",v:196.26},
+           {l:"F. Calamina madera...",v:50.32},
+           {l:"G. Madera rústica...",v:27.67},
+           {l:"H. Sin techo.",v:0.00}
+       ]},
+       {l:"3. Pisos",opts:[
+           {l:"A. Mármol importado, porcelanato...",v:257.40},
+           {l:"B. Mármol nacional, parquet fino...",v:208.83},
+           {l:"C. Parquet de 1ra, Laminado...",v:121.24},
+           {l:"D. Parquet de 2da, loseta veneciana...",v:81.23},
+           {l:"E. Loseta corriente, canto rodado...",v:55.47},
+           {l:"F. Loseta vinílica, cemento bruñado...",v:48.96},
+           {l:"G. Cemento pulido, ladrillo, entablado...",v:36.50},
+           {l:"H. Madera rústica...",v:26.06},
+           {l:"I. Tierra compactada...",v:0.00}
+       ]},
+       {l:"4. Puertas y Ventanas",opts:[
+           {l:"A. Aluminio pesado, madera fina...",v:379.97},
+           {l:"B. Aluminio diseño, vidrio tratado...",v:185.81},
+           {l:"C. Aluminio, vidrio polarizado...",v:120.09},
+           {l:"D. Ventanas aluminio, puertas selectas...",v:105.20},
+           {l:"E. Ventanas fierro, puertas selectas...",v:90.01},
+           {l:"F. Ventanas fierro industrial...",v:67.57},
+           {l:"G. Madera corriente, marcos PVC...",v:36.50},
+           {l:"H. Madera rústica...",v:18.25},
+           {l:"I. Sin puertas.",v:0.00}
+       ]},
+       {l:"5. Revestimientos",opts:[
+           {l:"A. Mármol importado, madera fina...",v:352.52},
+           {l:"B. Mármol nacional, enchape techos...",v:287.88},
+           {l:"C. Superficie caravista, enchape techos...",v:213.57},
+           {l:"D. Enchape madera o laminados...",v:163.86},
+           {l:"E. Tarrajeo frotachado, pintura...",v:79.47},
+           {l:"F. Estucado yeso/barro...",v:65.16},
+           {l:"G. Pintado ladrillo rústico...",v:30.63},
+           {l:"H. Sin revestimiento...",v:10.87},
+           {l:"I. Sin...",v:0.00}
+       ]},
+       {l:"6. Baños",opts:[
+           {l:"A. Baños completos lujo importado...",v:185.81},
+           {l:"B. Baños completos importados...",v:128.22},
+           {l:"C. Baños completos nacionales...",v:97.49},
+           {l:"D. Baños nacionales blancos...",v:67.63},
+           {l:"E. Baños mayólica blanca parcial...",v:36.08},
+           {l:"F. Baños blancos sin mayólica...",v:21.21},
+           {l:"G. Sanitarios básicos...",v:15.81},
+           {l:"H. Sin aparatos...",v:0.00}
+       ]},
+       {l:"7. Instalaciones",opts:[
+           {l:"A. A/C, Iluminación especial...",v:376.82},
+           {l:"B. Bombeo, Ascensor, Teléfono...",v:275.13},
+           {l:"C. Agua F/C, Trifásica...",v:173.57},
+           {l:"D. Agua F/C, Monofásica...",v:109.64},
+           {l:"E. Agua F, Monofásica, Gas...",v:79.63},
+           {l:"F. Agua F, Monofásica...",v:45.55},
+           {l:"G. Agua F sin empotrar...",v:42.26},
+           {l:"H. Sin instalación...",v:22.82},
+           {l:"I. Sin...",v:0.00}
+       ]}
     ];
  
     function t3_init() {
@@ -724,7 +790,7 @@
             <option value="0">-- Seleccionar --</option>
            ${x.opts.map(o=>`<option value="${o.v}">${o.l} S/${o.v.toFixed(2)}</option>`).join('')}
           </select>
-       </div>`).join('');
+        </div>`).join('');
     }
  
     function t3_calc() {
