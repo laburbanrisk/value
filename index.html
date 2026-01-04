@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <title>Plataforma Técnica de Valoración Urbana 2026</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover" />
   
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -24,6 +24,10 @@
               red: '#DA291C',
               dark: '#0f172a'
             }
+          },
+          boxShadow: {
+            'glow': '0 0 20px rgba(0, 40, 85, 0.15)',
+            'float': '0 10px 30px -10px rgba(0,0,0,0.3)'
           }
         }
       }
@@ -32,141 +36,180 @@
  
   <style>
     /* ESTILOS BASE Y ANIMACIONES */
-    body { background-color: #f8fafc; color: #334155; -webkit-font-smoothing: antialiased; }
+    body { 
+        background-color: #f8fafc; 
+        color: #334155; 
+        -webkit-font-smoothing: antialiased; 
+        /* Prevenir rebote en iOS */
+        overscroll-behavior-y: none;
+    }
     
-    .view-section { display: none; min-height: 100vh; flex-direction: column; animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+    .view-section { 
+        display: none; 
+        min-height: 100vh; 
+        flex-direction: column; 
+        animation: fadeIn 0.4s ease-out; 
+    }
     .view-section.active { display: flex; }
-    @keyframes fadeIn { from{opacity:0; transform: translateY(10px);} to{opacity:1; transform: translateY(0);} }
+    
+    @keyframes fadeIn { 
+        from{opacity:0; transform: translateY(15px);} 
+        to{opacity:1; transform: translateY(0);} 
+    }
  
     /* Tarjetas del menú principal */
     .menu-card { 
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
     }
-    .menu-card:hover { 
-      transform: translateY(-8px); 
-      box-shadow: 0 25px 50px -12px rgba(0, 40, 85, 0.15);
-      border-color: #DA291C;
+    .menu-card:active { transform: scale(0.98); }
+    @media(hover: hover) {
+        .menu-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 20px 40px -5px rgba(0, 40, 85, 0.15);
+            border-color: #DA291C;
+        }
     }
  
-    /* Inputs Modernos */
+    /* Inputs Modernos & Táctiles */
     input, select { 
       outline: none; 
       transition: all 0.2s ease; 
       appearance: none; 
       background-image: none;
+      font-size: 16px; /* Evita zoom en iOS */
+    }
+    select {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.75rem center;
+        background-repeat: no-repeat;
+        background-size: 1.5em 1.5em;
     }
     input:focus, select:focus { 
       border-color: #002855; 
-      box-shadow: 0 0 0 4px rgba(0, 40, 85, 0.1); 
+      box-shadow: 0 0 0 3px rgba(0, 40, 85, 0.1); 
+      background-color: #fff;
     }
     
     /* Scrollbar Personalizado */
-    .custom-scroll::-webkit-scrollbar { width: 6px; }
+    .custom-scroll::-webkit-scrollbar { width: 5px; }
     .custom-scroll::-webkit-scrollbar-track { background: transparent; }
     .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-    .custom-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
- 
+    
     /* Utilidades extra */
     .glass-header {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.90);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(0,0,0,0.05);
     }
+
+    /* Padding seguro para móviles (iPhone X+) */
+    .safe-pb { padding-bottom: env(safe-area-inset-bottom); }
+    .safe-pt { padding-top: env(safe-area-inset-top); }
   </style>
 </head>
-<body class="selection:bg-brand-blue selection:text-white">
+<body class="selection:bg-brand-blue selection:text-white pb-0 mb-0">
  
   <div id="view-landing" class="view-section active">
-    <header class="bg-brand-blue relative overflow-hidden pb-12 pt-16 px-6 text-center shadow-xl">
+    <header class="bg-brand-blue relative overflow-hidden pb-16 pt-20 px-6 text-center shadow-xl rounded-b-[2.5rem]">
       <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-brand-red via-brand-yellow to-brand-red"></div>
-      <div class="absolute -top-20 -left-20 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-      <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-brand-red rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
       
-      <div class="relative z-10 max-w-4xl mx-auto">
-        <h1 class="text-5xl md:text-7xl font-bold font-heading text-white mb-2 tracking-wide">
-          VALORACIÓN <span class="text-brand-yellow">URBANA</span>
+      <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <div class="absolute -top-20 -left-20 w-80 h-80 bg-blue-500 rounded-full mix-blend-overlay filter blur-[80px] opacity-30 animate-pulse"></div>
+          <div class="absolute bottom-0 right-0 w-64 h-64 bg-brand-red rounded-full mix-blend-overlay filter blur-[80px] opacity-20"></div>
+      </div>
+      
+      <div class="relative z-10 max-w-4xl mx-auto mt-4">
+        <h1 class="text-5xl md:text-7xl font-bold font-heading text-white mb-2 tracking-wide leading-tight">
+          VALORACIÓN <br class="md:hidden"/> <span class="text-brand-yellow">URBANA</span>
         </h1>
-        <div class="h-1 w-24 bg-brand-red mx-auto mb-6"></div>
-        <p class="text-lg md:text-xl text-blue-100 font-light tracking-[0.2em]">HERRAMIENTAS TÉCNICAS 2026</p>
+        <div class="h-1.5 w-24 bg-brand-red mx-auto mb-6 rounded-full"></div>
+        <p class="text-sm md:text-xl text-blue-100 font-light tracking-[0.2em] uppercase">Herramientas Técnicas 2026</p>
       </div>
     </header>
  
-    <main class="flex-1 max-w-7xl mx-auto w-full p-6 -mt-8 relative z-20">
-      <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
-        <div onclick="switchView('view-terreno')" class="menu-card bg-white p-8 rounded-2xl shadow-lg border border-slate-100 cursor-pointer flex flex-col items-center text-center h-full group">
-          <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mb-6 group-hover:bg-brand-blue transition-colors duration-300">
-            <i class="fa-solid fa-map-location-dot text-3xl text-brand-blue group-hover:text-brand-yellow"></i>
-          </div>
-          <h2 class="text-2xl font-bold text-slate-800 font-heading mb-3">1. VALOR DEL TERRENO</h2>
-          <p class="text-sm text-slate-500 leading-relaxed mb-8 flex-1">Buscador Oficial MEF. Consulta planos arancelarios por distrito y ubigeo.</p>
-          <span class="text-xs font-bold text-brand-blue border-b-2 border-brand-red pb-1 group-hover:border-brand-yellow transition-all">ACCEDER AHORA <i class="fa-solid fa-arrow-right ml-1"></i></span>
+    <main class="flex-1 max-w-7xl mx-auto w-full p-4 md:p-6 -mt-10 relative z-20 pb-10">
+      <div class="grid md:grid-cols-3 gap-4 lg:gap-8">
+        <div onclick="switchView('view-terreno')" class="menu-card bg-white p-6 md:p-8 rounded-2xl shadow-glow border border-white cursor-pointer flex flex-row md:flex-col items-center gap-4 md:gap-0 h-full group relative overflow-hidden">
+            <div class="absolute right-0 top-0 p-4 opacity-5 md:opacity-100 md:static">
+                 <div class="w-16 h-16 md:w-20 md:h-20 bg-blue-50 rounded-2xl md:rounded-full flex items-center justify-center md:mb-6 group-hover:bg-brand-blue transition-colors duration-300">
+                    <i class="fa-solid fa-map-location-dot text-2xl md:text-3xl text-brand-blue group-hover:text-brand-yellow"></i>
+                 </div>
+            </div>
+            <div class="flex-1 text-left md:text-center z-10">
+                <h2 class="text-xl md:text-2xl font-bold text-slate-800 font-heading mb-1 md:mb-3">VALOR TERRENO</h2>
+                <p class="text-xs md:text-sm text-slate-500 leading-relaxed mb-2 md:mb-8">Buscador Oficial MEF. Planos arancelarios por distrito.</p>
+                <span class="text-xs font-bold text-brand-blue flex items-center gap-2 md:justify-center">ACCEDER <i class="fa-solid fa-arrow-right"></i></span>
+            </div>
         </div>
  
-        <div onclick="switchView('view-edificacion')" class="menu-card bg-white p-8 rounded-2xl shadow-lg border border-slate-100 cursor-pointer flex flex-col items-center text-center h-full group">
-          <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mb-6 group-hover:bg-brand-blue transition-colors duration-300">
-            <i class="fa-solid fa-building-columns text-3xl text-brand-blue group-hover:text-brand-yellow"></i>
-          </div>
-          <h2 class="text-2xl font-bold text-slate-800 font-heading mb-3">2. VALOR EDIFICACIÓN</h2>
-          <p class="text-sm text-slate-500 leading-relaxed mb-8 flex-1">Calculadora Oficial MVCS. Depreciación RM-172-2016 y partidas a Costo Directo.</p>
-          <span class="text-xs font-bold text-brand-blue border-b-2 border-brand-red pb-1 group-hover:border-brand-yellow transition-all">ACCEDER AHORA <i class="fa-solid fa-arrow-right ml-1"></i></span>
+        <div onclick="switchView('view-edificacion')" class="menu-card bg-white p-6 md:p-8 rounded-2xl shadow-glow border border-white cursor-pointer flex flex-row md:flex-col items-center gap-4 md:gap-0 h-full group relative overflow-hidden">
+             <div class="absolute right-0 top-0 p-4 opacity-5 md:opacity-100 md:static">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-blue-50 rounded-2xl md:rounded-full flex items-center justify-center md:mb-6 group-hover:bg-brand-blue transition-colors duration-300">
+                    <i class="fa-solid fa-building-columns text-2xl md:text-3xl text-brand-blue group-hover:text-brand-yellow"></i>
+                </div>
+            </div>
+            <div class="flex-1 text-left md:text-center z-10">
+                <h2 class="text-xl md:text-2xl font-bold text-slate-800 font-heading mb-1 md:mb-3">EDIFICACIÓN</h2>
+                <p class="text-xs md:text-sm text-slate-500 leading-relaxed mb-2 md:mb-8">Calculadora Oficial MVCS. Depreciación y Costos Directos.</p>
+                <span class="text-xs font-bold text-brand-blue flex items-center gap-2 md:justify-center">ACCEDER <i class="fa-solid fa-arrow-right"></i></span>
+            </div>
         </div>
  
-        <div onclick="switchView('view-presupuesto')" class="menu-card bg-white p-8 rounded-2xl shadow-lg border border-slate-100 cursor-pointer flex flex-col items-center text-center h-full group">
-          <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mb-6 group-hover:bg-brand-blue transition-colors duration-300">
-            <i class="fa-solid fa-calculator text-3xl text-brand-blue group-hover:text-brand-yellow"></i>
-          </div>
-          <h2 class="text-2xl font-bold text-slate-800 font-heading mb-3">3. PRESUPUESTO</h2>
-          <p class="text-sm text-slate-500 leading-relaxed mb-8 flex-1">Presupuesto de Obra referencial con Valores Unitarios Oficiales a Diciembre 2025.</p>
-          <span class="text-xs font-bold text-brand-blue border-b-2 border-brand-red pb-1 group-hover:border-brand-yellow transition-all">ACCEDER AHORA <i class="fa-solid fa-arrow-right ml-1"></i></span>
+        <div onclick="switchView('view-presupuesto')" class="menu-card bg-white p-6 md:p-8 rounded-2xl shadow-glow border border-white cursor-pointer flex flex-row md:flex-col items-center gap-4 md:gap-0 h-full group relative overflow-hidden">
+             <div class="absolute right-0 top-0 p-4 opacity-5 md:opacity-100 md:static">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-blue-50 rounded-2xl md:rounded-full flex items-center justify-center md:mb-6 group-hover:bg-brand-blue transition-colors duration-300">
+                    <i class="fa-solid fa-calculator text-2xl md:text-3xl text-brand-blue group-hover:text-brand-yellow"></i>
+                </div>
+            </div>
+            <div class="flex-1 text-left md:text-center z-10">
+                <h2 class="text-xl md:text-2xl font-bold text-slate-800 font-heading mb-1 md:mb-3">PRESUPUESTO</h2>
+                <p class="text-xs md:text-sm text-slate-500 leading-relaxed mb-2 md:mb-8">Estimación referencial con valores unitarios Dic. 2025.</p>
+                <span class="text-xs font-bold text-brand-blue flex items-center gap-2 md:justify-center">ACCEDER <i class="fa-solid fa-arrow-right"></i></span>
+            </div>
         </div>
       </div>
     </main>
- 
-    <footer class="bg-white text-slate-400 py-8 text-center border-t border-slate-100 mt-8">
-      <div class="flex justify-center gap-6 mb-4 text-xl">
-         <a href="#" class="hover:text-brand-blue transition"><i class="fa-brands fa-facebook"></i></a>
-         <a href="#" class="hover:text-brand-red transition"><i class="fa-brands fa-youtube"></i></a>
-         <a href="#" class="hover:text-[#E1306C] transition"><i class="fa-brands fa-instagram"></i></a>
-      </div>
-      <p class="font-heading text-sm tracking-wider">LAB URBAN RISK &copy; 2026</p>
+    
+    <footer class="text-center py-6 text-slate-400 text-xs safe-pb">
+        <p>LAB URBAN RISK &copy; 2026</p>
     </footer>
   </div>
  
   <div id="view-terreno" class="view-section bg-slate-50">
-    <nav class="glass-header p-4 sticky top-0 z-50 flex justify-between items-center shadow-sm">
-       <div class="flex items-center gap-4">
-         <div class="bg-brand-blue text-white w-10 h-10 flex items-center justify-center font-bold text-lg rounded-lg shadow-md font-heading">1</div>
+    <nav class="glass-header p-3 sticky top-0 z-50 flex justify-between items-center shadow-sm safe-pt">
+       <div class="flex items-center gap-3">
+         <div class="bg-brand-blue text-white w-9 h-9 flex items-center justify-center font-bold text-base rounded-lg shadow-md font-heading">1</div>
          <div>
-           <h2 class="text-brand-blue font-bold text-lg font-heading leading-none">VALORES ARANCELARIOS</h2>
-           <p class="text-[10px] text-slate-400 font-medium tracking-wide">MINISTERIO DE ECONOMÍA Y FINANZAS 2026</p>
+           <h2 class="text-brand-blue font-bold text-base font-heading leading-none">ARANCELES</h2>
+           <p class="text-[10px] text-slate-400 font-medium tracking-wide">MEF 2026</p>
          </div>
        </div>
-       <button onclick="goHome()" class="text-slate-500 hover:text-brand-red font-medium text-sm flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-100 transition">
-         <i class="fa-solid fa-arrow-left"></i> <span class="hidden md:inline">VOLVER</span>
+       <button onclick="goHome()" class="text-slate-500 hover:text-brand-red w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 transition">
+         <i class="fa-solid fa-xmark text-lg"></i>
        </button>
     </nav>
  
-    <div class="flex-1 w-full max-w-3xl mx-auto p-6 flex flex-col gap-6">
-       <div class="bg-white rounded-2xl shadow-xl p-8 text-center border border-slate-100 relative overflow-hidden">
-         <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-blue to-brand-red"></div>
-         <h3 class="font-heading text-brand-blue text-3xl mb-2">BUSCADOR NACIONAL</h3>
-         <p class="text-slate-400 mb-8 text-sm">Ingrese Distrito o Ubigeo para visualizar la base de datos.</p>
+    <div class="flex-1 w-full max-w-3xl mx-auto p-4 flex flex-col gap-4">
+       <div class="bg-white rounded-2xl shadow-sm p-6 text-center border border-slate-100 relative overflow-hidden">
+         <h3 class="font-heading text-brand-blue text-2xl mb-1">BUSCADOR</h3>
+         <p class="text-slate-400 mb-6 text-xs">Ingrese Distrito o Ubigeo.</p>
          
-         <div class="relative max-w-xl mx-auto group">
-            <input id="t1_search" type="text" class="w-full py-4 pl-14 pr-4 text-lg bg-slate-50 border border-slate-200 rounded-xl font-bold text-brand-blue placeholder:text-slate-300 focus:bg-white focus:ring-4 focus:ring-blue-50/50 transition-all uppercase" placeholder="EJ: SAN ISIDRO, 150101...">
-            <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 text-xl group-focus-within:text-brand-blue transition-colors"></i>
+         <div class="relative w-full group">
+            <input id="t1_search" type="text" class="w-full py-4 pl-12 pr-4 text-base bg-slate-50 border border-slate-200 rounded-xl font-bold text-brand-blue placeholder:text-slate-300 focus:bg-white focus:ring-4 focus:ring-blue-50/50 transition-all uppercase" placeholder="EJ: SAN ISIDRO...">
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg"></i>
          </div>
        </div>
  
-       <div class="bg-white rounded-2xl shadow-lg border border-slate-100 flex-1 flex flex-col overflow-hidden min-h-[400px]">
-         <div class="px-6 py-4 bg-slate-50 border-b border-slate-100 flex justify-between items-center">
-           <span class="font-bold text-slate-600 text-xs uppercase tracking-wider">Base de Datos</span>
-           <span class="text-[10px] bg-brand-blue text-white px-3 py-1 rounded-full font-bold shadow-sm" id="t1_count">0 resultados</span>
+       <div class="bg-white rounded-2xl shadow-sm border border-slate-100 flex-1 flex flex-col overflow-hidden min-h-[50vh]">
+         <div class="px-5 py-3 bg-slate-50 border-b border-slate-100 flex justify-between items-center">
+           <span class="font-bold text-slate-600 text-xs uppercase tracking-wider">Resultados</span>
+           <span class="text-[10px] bg-brand-blue text-white px-2 py-1 rounded-full font-bold" id="t1_count">0</span>
          </div>
-         <div id="t1_list" class="flex-1 overflow-y-auto custom-scroll p-4 space-y-3 bg-white">
-            <div class="h-full flex flex-col items-center justify-center opacity-40">
-              <i class="fa-solid fa-database text-4xl mb-3 text-slate-300"></i>
-              <p class="text-slate-400 font-medium text-sm">Esperando búsqueda...</p>
+         <div id="t1_list" class="flex-1 overflow-y-auto custom-scroll p-3 space-y-2 bg-white pb-10">
+            <div class="h-full flex flex-col items-center justify-center opacity-40 py-10">
+              <i class="fa-solid fa-database text-3xl mb-3 text-slate-300"></i>
+              <p class="text-slate-400 font-medium text-xs">Esperando búsqueda...</p>
             </div>
          </div>
        </div>
@@ -174,174 +217,167 @@
   </div>
  
   <div id="view-edificacion" class="view-section bg-slate-100">
-    <nav class="glass-header p-4 sticky top-0 z-50 flex justify-between items-center shadow-sm">
-      <div class="flex items-center gap-4">
-        <div class="bg-brand-blue text-white w-10 h-10 flex items-center justify-center font-bold text-lg rounded-lg shadow-md font-heading">2</div>
+    <nav class="glass-header p-3 sticky top-0 z-50 flex justify-between items-center shadow-sm safe-pt">
+      <div class="flex items-center gap-3">
+        <div class="bg-brand-blue text-white w-9 h-9 flex items-center justify-center font-bold text-base rounded-lg shadow-md font-heading">2</div>
         <div>
-          <h2 class="text-brand-blue font-bold text-lg font-heading leading-none">CALCULADORA EDIFICACIÓN</h2>
-          <p class="text-[10px] text-slate-400 font-medium tracking-wide">AUTOAVALÚO & COSTOS DIRECTOS</p>
+          <h2 class="text-brand-blue font-bold text-base font-heading leading-none">EDIFICACIÓN</h2>
+          <p class="text-[10px] text-slate-400 font-medium tracking-wide">CALCULADORA</p>
         </div>
       </div>
-      <button onclick="goHome()" class="text-slate-500 hover:text-brand-red font-medium text-sm flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-100 transition">
-        <i class="fa-solid fa-arrow-left"></i> <span class="hidden md:inline">VOLVER</span>
+      <button onclick="goHome()" class="text-slate-500 hover:text-brand-red w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 transition">
+        <i class="fa-solid fa-xmark text-lg"></i>
       </button>
     </nav>
  
-    <div class="flex-1 w-full max-w-[1400px] mx-auto p-4 md:p-6 grid lg:grid-cols-12 gap-6 h-[calc(100vh-80px)] items-start">
+    <div class="flex-1 w-full max-w-[1400px] mx-auto p-3 md:p-6 lg:grid lg:grid-cols-12 gap-6 items-start pb-32 lg:pb-6">
        
-       <div class="lg:col-span-7 bg-white rounded-2xl shadow-xl border border-slate-200 flex flex-col overflow-hidden h-full">
-         <div class="px-6 py-4 bg-slate-50 border-b border-slate-100 flex justify-between items-center z-10">
-            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2"><i class="fa-solid fa-sliders"></i> Parámetros Técnicos</span>
-            <button onclick="t2_reset()" class="text-[10px] text-brand-red font-bold hover:bg-red-50 px-3 py-1 rounded transition">REINICIAR TODO</button>
+       <div class="lg:col-span-7 bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden mb-4 lg:mb-0">
+         <div class="px-5 py-3 bg-slate-50 border-b border-slate-100 flex justify-between items-center z-10 sticky top-0">
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2"><i class="fa-solid fa-sliders"></i> Datos</span>
+            <button onclick="t2_reset()" class="text-[10px] text-brand-red font-bold hover:bg-red-50 px-3 py-1 rounded transition border border-red-100">BORRAR</button>
          </div>
          
-         <div class="flex-1 overflow-y-auto custom-scroll p-6 space-y-8 bg-white">
-            <div class="bg-blue-50/50 p-5 rounded-xl border border-blue-100 transition-colors hover:border-blue-200">
-               <label class="block text-xs font-bold text-brand-blue mb-2 uppercase tracking-wide">1. Región Tarifaria</label>
+         <div class="p-5 space-y-6 bg-white">
+            <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100">
+               <label class="block text-[10px] font-bold text-brand-blue mb-1 uppercase tracking-wide">1. Región Tarifaria</label>
                <div class="relative">
-                 <select id="t2_region" onchange="t2_refresh()" class="w-full p-3 pl-4 border border-blue-200 rounded-lg font-semibold text-brand-blue bg-white text-sm cursor-pointer shadow-sm">
-                     <option value="lima">LIMA METROPOLITANA Y CALLAO</option>
-                     <option value="costa">COSTA (EXCEPTO LIMA/CALLAO)</option>
+                 <select id="t2_region" onchange="t2_refresh()" class="w-full p-3.5 border border-blue-200 rounded-lg font-bold text-brand-blue bg-white text-sm shadow-sm">
+                     <option value="lima">LIMA Y CALLAO</option>
+                     <option value="costa">COSTA</option>
                      <option value="sierra">SIERRA</option>
                      <option value="selva">SELVA</option>
                  </select>
-                 <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-blue-300 text-xs pointer-events-none"></i>
                </div>
             </div>
  
             <div>
-               <div class="flex items-center gap-2 mb-4 pb-2 border-b border-slate-100">
+               <div class="flex items-center gap-2 mb-3 pb-2 border-b border-slate-100">
                  <span class="bg-brand-blue text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold">A</span>
-                 <label class="text-sm font-bold text-slate-800 uppercase">Depreciación & Áreas</label>
+                 <label class="text-xs font-bold text-slate-800 uppercase">Depreciación & Áreas</label>
                </div>
                
-               <div class="grid gap-4 mb-4">
-                  <div>
-                    <label class="text-[11px] font-semibold text-slate-500 block mb-1">TIPO DE USO</label>
-                    <select id="t2_tipo_edif" onchange="t2_calc()" class="w-full p-2.5 border border-slate-200 rounded-lg text-sm font-medium bg-slate-50 text-slate-700 focus:bg-white">
-                       <option value="1">1. Casa Habitación / Dpto. Vivienda (Tabla 01)</option>
-                       <option value="2">2. Tiendas / Depósitos</option>
-                       <option value="3">3. Edificios Administrativos</option>
-                       <option value="4">4. Salud / Industria</option>
-                    </select>
-                  </div>
-               </div>
+               <div class="space-y-4">
+                 <div>
+                   <label class="text-[11px] font-semibold text-slate-500 block mb-1">TIPO DE USO</label>
+                   <select id="t2_tipo_edif" onchange="t2_calc()" class="w-full p-3 border border-slate-200 rounded-lg text-sm font-medium bg-slate-50 text-slate-700">
+                      <option value="1">1. Casa Habitación / Dpto</option>
+                      <option value="2">2. Tiendas / Depósitos</option>
+                      <option value="3">3. Oficinas</option>
+                      <option value="4">4. Salud / Industria</option>
+                   </select>
+                 </div>
  
-               <div class="grid grid-cols-2 gap-4 mb-4">
-                  <div>
-                    <label class="text-[11px] font-semibold text-slate-500 block mb-1">MATERIAL PREDOMINANTE</label>
-                    <select id="t2_mat" onchange="t2_calc()" class="w-full p-2.5 border border-slate-200 rounded-lg text-sm font-medium bg-slate-50">
-                       <option value="concreto">Concreto / Ladrillo</option>
-                       <option value="adobe">Adobe / Quincha</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label class="text-[11px] font-semibold text-slate-500 block mb-1">ESTADO DE CONSERVACIÓN</label>
-                    <select id="t2_est" onchange="t2_calc()" class="w-full p-2.5 border border-slate-200 rounded-lg text-sm font-medium bg-slate-50">
-                       <option value="0">Muy Bueno</option>
-                       <option value="1">Bueno</option>
-                       <option value="2">Regular</option>
-                       <option value="3">Malo</option>
-                    </select>
-                  </div>
-               </div>
-               
-               <div class="grid grid-cols-12 gap-4">
-                  <div class="col-span-4">
-                    <label class="text-[11px] font-semibold text-slate-500 block mb-1">ANTIGÜEDAD</label>
-                    <div class="relative">
-                      <input type="number" id="t2_ant" value="0" min="0" oninput="t2_calc()" class="w-full p-2.5 border border-slate-200 rounded-lg text-center text-sm font-bold text-slate-700 bg-slate-50">
-                      <span class="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-slate-400">años</span>
+                 <div class="grid grid-cols-2 gap-3">
+                    <div>
+                      <label class="text-[11px] font-semibold text-slate-500 block mb-1">MATERIAL</label>
+                      <select id="t2_mat" onchange="t2_calc()" class="w-full p-3 border border-slate-200 rounded-lg text-sm font-medium bg-slate-50">
+                         <option value="concreto">Concreto</option>
+                         <option value="adobe">Adobe</option>
+                      </select>
                     </div>
-                  </div>
-                  <div class="col-span-8">
-                    <label class="text-[11px] font-bold text-brand-blue block mb-1">ÁREA TECHADA TOTAL</label>
-                    <div class="relative">
-                       <input type="number" id="t2_area" value="100" min="1" oninput="t2_calc()" class="w-full p-2.5 border border-blue-200 rounded-lg text-center font-bold text-brand-blue bg-blue-50/30 focus:bg-white text-lg">
-                       <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-blue-300">m²</span>
+                    <div>
+                      <label class="text-[11px] font-semibold text-slate-500 block mb-1">ESTADO</label>
+                      <select id="t2_est" onchange="t2_calc()" class="w-full p-3 border border-slate-200 rounded-lg text-sm font-medium bg-slate-50">
+                         <option value="0">Muy Bueno</option>
+                         <option value="1">Bueno</option>
+                         <option value="2">Regular</option>
+                         <option value="3">Malo</option>
+                      </select>
                     </div>
-                  </div>
-               </div>
-               <div class="mt-2 flex justify-end">
-                  <span class="text-[10px] inline-flex items-center gap-2 bg-yellow-50 text-yellow-700 px-3 py-1 rounded-full font-bold border border-yellow-100">
-                    <i class="fa-solid fa-arrow-trend-down"></i> Depreciación calculada: <span id="t2_deprec_val">0%</span>
-                  </span>
+                 </div>
+                 
+                 <div class="grid grid-cols-12 gap-3">
+                    <div class="col-span-4">
+                      <label class="text-[11px] font-semibold text-slate-500 block mb-1">ANTIGÜEDAD</label>
+                      <div class="relative">
+                        <input type="number" id="t2_ant" value="0" min="0" oninput="t2_calc()" class="w-full p-3 border border-slate-200 rounded-lg text-center text-sm font-bold text-slate-700 bg-slate-50">
+                        <span class="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-slate-400">años</span>
+                      </div>
+                    </div>
+                    <div class="col-span-8">
+                      <label class="text-[11px] font-bold text-brand-blue block mb-1">ÁREA TECHADA (m²)</label>
+                      <input type="number" id="t2_area" value="100" min="1" oninput="t2_calc()" class="w-full p-3 border border-blue-200 rounded-lg text-center font-bold text-brand-blue bg-blue-50/30 focus:bg-white text-lg">
+                    </div>
+                 </div>
                </div>
             </div>
  
             <div>
-               <div class="flex items-center gap-2 mb-4 pb-2 border-b border-slate-100">
+               <div class="flex items-center gap-2 mb-3 pb-2 border-b border-slate-100">
                  <span class="bg-brand-blue text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold">B</span>
-                 <label class="text-sm font-bold text-slate-800 uppercase">Valores Unitarios (Vigentes 2026)</label>
+                 <label class="text-xs font-bold text-slate-800 uppercase">Valores Unitarios</label>
                </div>
                <div id="t2_cats_list" class="space-y-4"></div>
             </div>
  
             <div>
-               <div class="flex items-center gap-2 mb-4 pb-2 border-b border-slate-100">
+               <div class="flex items-center gap-2 mb-3 pb-2 border-b border-slate-100">
                   <span class="bg-brand-blue text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold">C</span>
-                  <label class="text-sm font-bold text-slate-800 uppercase">Obras Complementarias</label>
+                  <label class="text-xs font-bold text-slate-800 uppercase">Obras Complementarias</label>
                </div>
-               <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+               <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
                   <div class="flex flex-col gap-3">
-                     <select id="t2_obra_sel" class="w-full p-2.5 border border-slate-200 rounded-lg text-xs font-medium text-slate-600 shadow-sm"></select>
-                     <div class="flex gap-3">
-                        <input id="t2_obra_qty" type="number" placeholder="Cant." class="w-24 p-2.5 border border-slate-200 rounded-lg text-center text-sm font-bold">
-                        <button onclick="t2_addObra()" class="flex-1 bg-slate-800 text-white px-4 rounded-lg text-xs font-bold hover:bg-black uppercase shadow-lg shadow-slate-300 transition-all flex items-center justify-center gap-2">
-                          <i class="fa-solid fa-plus"></i> Agregar Partida
+                     <select id="t2_obra_sel" class="w-full p-3 border border-slate-200 rounded-lg text-xs font-medium text-slate-600 shadow-sm"></select>
+                     <div class="flex gap-2">
+                        <input id="t2_obra_qty" type="number" placeholder="#" class="w-20 p-3 border border-slate-200 rounded-lg text-center text-sm font-bold bg-white">
+                        <button onclick="t2_addObra()" class="flex-1 bg-slate-800 text-white rounded-lg text-xs font-bold hover:bg-black uppercase shadow-lg shadow-slate-300 transition-all flex items-center justify-center gap-2 active:scale-95">
+                          <i class="fa-solid fa-plus"></i> Agregar
                         </button>
                      </div>
                   </div>
-                  <div id="t2_added_list" class="mt-3 space-y-1 max-h-40 overflow-y-auto custom-scroll"></div>
+                  <div id="t2_added_list" class="mt-3 space-y-1"></div>
                </div>
             </div>
  
-            <div class="bg-orange-50 p-5 rounded-xl border border-orange-100 flex items-center justify-between gap-4">
+            <div class="bg-orange-50 p-4 rounded-xl border border-orange-100 flex items-center justify-between gap-4">
                <div class="flex-1">
-                  <label class="text-xs font-bold text-orange-600 uppercase mb-1 block">D. Valor Terreno (S/)</label>
-                  <p class="text-[10px] text-orange-400">Ingrese el dato obtenido en Herramienta 1</p>
+                  <label class="text-[10px] font-bold text-orange-600 uppercase mb-1 block">D. Valor Terreno (S/)</label>
+                  <p class="text-[9px] text-orange-400 leading-tight">Dato de Herramienta 1</p>
                </div>
-               <div class="w-40">
-                  <input type="number" id="t2_val_terreno" placeholder="0.00" oninput="t2_calc()" class="w-full p-3 border border-orange-200 rounded-lg text-right font-black text-xl text-slate-700 focus:ring-orange-200">
+               <div class="w-32">
+                  <input type="number" id="t2_val_terreno" placeholder="0" oninput="t2_calc()" class="w-full p-3 border border-orange-200 rounded-lg text-right font-black text-lg text-slate-700 bg-white focus:ring-orange-200">
                </div>
             </div>
-            
-            <div class="h-10 lg:hidden"></div>
          </div>
        </div>
  
-       <div class="lg:col-span-5 flex flex-col h-full lg:sticky lg:top-4">
-         <div class="bg-brand-blue text-white p-8 rounded-2xl shadow-2xl flex flex-col justify-center items-center text-center h-full relative overflow-hidden ring-4 ring-white">
+       <div class="fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 shadow-[0_-5px_20px_rgba(0,0,0,0.1)] z-50 p-4 pb-8 safe-pb lg:hidden transition-transform duration-300">
+          <div class="flex justify-between items-end">
+             <div>
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">VALOR TOTAL ESTIMADO</span>
+                <span class="text-xs text-brand-blue font-semibold">S/ m²: <span id="res_unit_mob">0.00</span></span>
+             </div>
+             <div class="text-right">
+                <span class="text-lg font-bold text-slate-500 mr-1">S/</span>
+                <span id="res_total_mob" class="text-3xl font-heading font-bold text-brand-blue">0.00</span>
+             </div>
+          </div>
+       </div>
+ 
+       <div class="hidden lg:flex lg:col-span-5 flex-col h-full lg:sticky lg:top-24">
+         <div class="bg-brand-blue text-white p-8 rounded-2xl shadow-2xl flex flex-col justify-center items-center text-center relative overflow-hidden ring-4 ring-white">
             <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
             <div class="absolute bottom-0 left-0 w-40 h-40 bg-brand-yellow opacity-10 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2"></div>
             
-            <h3 class="font-heading text-brand-yellow text-2xl mb-8 tracking-widest relative z-10">RESUMEN DE VALUACIÓN</h3>
+            <h3 class="font-heading text-brand-yellow text-xl mb-6 tracking-widest relative z-10">RESUMEN VALUACIÓN</h3>
             
-            <div class="w-full space-y-4 text-sm mb-10 border-b border-white/10 pb-8 relative z-10">
-               <div class="flex justify-between items-center group">
-                  <span class="text-blue-200 font-light">Edificación (Depreciada)</span>
-                  <span id="res_edif" class="font-mono font-bold text-lg group-hover:text-white transition">S/ 0.00</span>
-               </div>
-               <div class="flex justify-between items-center group">
-                  <span class="text-blue-200 font-light">Obras Complementarias</span>
-                  <span id="res_obras" class="font-mono font-bold text-lg group-hover:text-white transition">S/ 0.00</span>
-               </div>
-               <div class="flex justify-between items-center group">
-                  <span class="text-orange-300 font-light">Valor del Terreno</span>
-                  <span id="res_terreno" class="font-mono font-bold text-lg text-orange-400 group-hover:text-orange-300 transition">S/ 0.00</span>
+            <div class="w-full space-y-3 text-sm mb-8 border-b border-white/10 pb-6 relative z-10">
+               <div class="flex justify-between items-center"><span class="text-blue-200 font-light">Edificación</span><span id="res_edif" class="font-mono font-bold">S/ 0.00</span></div>
+               <div class="flex justify-between items-center"><span class="text-blue-200 font-light">Obras Comp.</span><span id="res_obras" class="font-mono font-bold">S/ 0.00</span></div>
+               <div class="flex justify-between items-center"><span class="text-orange-300 font-light">Terreno</span><span id="res_terreno" class="font-mono font-bold text-orange-400">S/ 0.00</span></div>
+            </div>
+            
+            <div class="relative z-10">
+               <span class="bg-white/10 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest backdrop-blur-sm">TOTAL PREDIO</span>
+               <div class="flex items-start justify-center mt-2">
+                  <span class="text-2xl opacity-60 font-serif mt-2 mr-2">S/.</span>
+                  <span id="res_total" class="text-6xl font-bold font-heading text-white tracking-tight">0.00</span>
                </div>
             </div>
             
-            <div class="relative z-10 transform transition-transform hover:scale-105 duration-300">
-               <span class="bg-white/10 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest backdrop-blur-sm">VALOR TOTAL DEL PREDIO</span>
-               <div class="flex items-start justify-center mt-4">
-                  <span class="text-3xl opacity-60 font-serif mt-2 mr-2">S/.</span>
-                  <span id="res_total" class="text-6xl md:text-7xl font-bold font-heading text-white drop-shadow-lg tracking-tight">0.00</span>
-               </div>
-            </div>
-            
-            <div class="mt-10 bg-black/20 px-6 py-2 rounded-full text-xs font-mono text-blue-200 backdrop-blur-md">
-               Unitario Promedio: <span id="res_unit" class="text-brand-yellow font-bold">0.00</span> S/m²
+            <div class="mt-8 bg-black/20 px-4 py-2 rounded-full text-xs font-mono text-blue-200 backdrop-blur-md">
+               Unitario: <span id="res_unit" class="text-brand-yellow font-bold">0.00</span> S/m²
             </div>
          </div>
        </div>
@@ -349,92 +385,94 @@
   </div>
  
   <div id="view-presupuesto" class="view-section bg-slate-50">
-    <nav class="glass-header p-4 sticky top-0 z-50 flex justify-between items-center shadow-sm">
-      <div class="flex items-center gap-4">
-        <div class="bg-brand-blue text-white w-10 h-10 flex items-center justify-center font-bold text-lg rounded-lg shadow-md font-heading">3</div>
+    <nav class="glass-header p-3 sticky top-0 z-50 flex justify-between items-center shadow-sm safe-pt">
+      <div class="flex items-center gap-3">
+        <div class="bg-brand-blue text-white w-9 h-9 flex items-center justify-center font-bold text-base rounded-lg shadow-md font-heading">3</div>
         <div>
-          <h2 class="text-brand-blue font-bold text-lg font-heading leading-none">PRESUPUESTO DE OBRA</h2>
-          <p class="text-[10px] text-slate-400 font-medium tracking-wide">ESTIMACIÓN REFERENCIAL</p>
+          <h2 class="text-brand-blue font-bold text-base font-heading leading-none">PRESUPUESTO</h2>
+          <p class="text-[10px] text-slate-400 font-medium tracking-wide">OBRA NUEVA</p>
         </div>
       </div>
-      <button onclick="goHome()" class="text-slate-500 hover:text-brand-red font-medium text-sm flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-100 transition">
-        <i class="fa-solid fa-arrow-left"></i> <span class="hidden md:inline">VOLVER</span>
+      <button onclick="goHome()" class="text-slate-500 hover:text-brand-red w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 transition">
+        <i class="fa-solid fa-xmark text-lg"></i>
       </button>
     </nav>
  
-    <div class="flex-1 w-full max-w-[1400px] mx-auto p-4 md:p-6 grid lg:grid-cols-12 gap-6 h-[calc(100vh-80px)] items-start">
-       <div class="lg:col-span-5 bg-white rounded-2xl shadow-xl border border-slate-200 flex flex-col overflow-hidden h-full">
-         <div class="p-5 bg-slate-50 border-b border-slate-100"><h3 class="font-bold text-slate-700 text-sm uppercase tracking-wider flex items-center gap-2"><i class="fa-solid fa-list-check"></i> Configuración de Partidas</h3></div>
+    <div class="flex-1 w-full max-w-[1400px] mx-auto p-3 md:p-6 lg:grid lg:grid-cols-12 gap-6 items-start pb-32 lg:pb-6">
+       
+       <div class="lg:col-span-5 bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden mb-4 lg:mb-0">
+         <div class="p-4 bg-slate-50 border-b border-slate-100"><h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider flex items-center gap-2"><i class="fa-solid fa-list-check"></i> Configuración</h3></div>
          
-         <div class="flex-1 overflow-y-auto custom-scroll p-6 space-y-8 bg-white">
+         <div class="p-5 space-y-6 bg-white">
             <div>
-               <label class="text-xs font-bold text-brand-blue uppercase border-b border-slate-100 block pb-2 mb-4">Datos del Proyecto</label>
+               <label class="text-[10px] font-bold text-brand-blue uppercase border-b border-slate-100 block pb-1 mb-3">Proyecto</label>
                <div class="grid grid-cols-2 gap-4">
                   <div>
                     <label class="text-[10px] font-bold text-slate-400 block mb-1">ÁREA TECHADA (m²)</label>
-                    <input type="number" id="t3_area" value="100" oninput="t3_calc()" class="w-full p-2.5 border border-slate-200 rounded-lg text-center font-bold text-slate-700 focus:border-brand-blue">
+                    <input type="number" id="t3_area" value="100" oninput="t3_calc()" class="w-full p-3 border border-slate-200 rounded-lg text-center font-bold text-slate-700 text-lg focus:border-brand-blue">
                   </div>
                   <div>
                     <label class="text-[10px] font-bold text-slate-400 block mb-1">N° PISOS</label>
-                    <input type="number" id="t3_pisos" value="1" oninput="t3_calc()" class="w-full p-2.5 border border-slate-200 rounded-lg text-center font-bold text-slate-700 focus:border-brand-blue">
-                  </div>
-                  <div class="col-span-2">
-                    <label class="text-[10px] font-bold text-slate-400 block mb-1">USO PREVISTO</label>
-                    <select class="w-full p-2.5 border border-slate-200 rounded-lg text-xs font-medium bg-slate-50"><option>Vivienda Unifamiliar</option><option>Vivienda Multifamiliar</option><option>Comercio / Oficinas</option><option>Educación / Salud</option></select>
+                    <input type="number" id="t3_pisos" value="1" oninput="t3_calc()" class="w-full p-3 border border-slate-200 rounded-lg text-center font-bold text-slate-700 text-lg focus:border-brand-blue">
                   </div>
                </div>
             </div>
  
             <div>
-               <label class="text-xs font-bold text-brand-blue uppercase border-b border-slate-100 block pb-2 mb-4">Gastos Generales & Impuestos</label>
+               <label class="text-[10px] font-bold text-brand-blue uppercase border-b border-slate-100 block pb-1 mb-3">Gastos (% del Costo)</label>
                <div class="grid grid-cols-3 gap-3">
                   <div>
-                    <label class="text-[10px] font-bold text-slate-400 block mb-1">G. GRAL (%)</label>
-                    <input type="number" id="t3_gg" value="15" oninput="t3_calc()" class="w-full p-2 border border-slate-200 rounded-lg text-center font-bold text-slate-600">
+                    <label class="text-[10px] font-bold text-slate-400 block mb-1">G. GRAL</label>
+                    <input type="number" id="t3_gg" value="15" oninput="t3_calc()" class="w-full p-2.5 border border-slate-200 rounded-lg text-center font-bold text-slate-600">
                   </div>
                   <div>
-                    <label class="text-[10px] font-bold text-slate-400 block mb-1">UTILIDAD (%)</label>
-                    <input type="number" id="t3_util" value="10" oninput="t3_calc()" class="w-full p-2 border border-slate-200 rounded-lg text-center font-bold text-slate-600">
+                    <label class="text-[10px] font-bold text-slate-400 block mb-1">UTILIDAD</label>
+                    <input type="number" id="t3_util" value="10" oninput="t3_calc()" class="w-full p-2.5 border border-slate-200 rounded-lg text-center font-bold text-slate-600">
                   </div>
                   <div>
-                    <label class="text-[10px] font-bold text-slate-400 block mb-1">IGV (%)</label>
-                    <input type="number" id="t3_igv" value="18" oninput="t3_calc()" class="w-full p-2 border border-slate-200 bg-slate-100 rounded-lg text-center font-bold text-slate-500" readonly>
+                    <label class="text-[10px] font-bold text-slate-400 block mb-1">IGV</label>
+                    <input type="number" id="t3_igv" value="18" class="w-full p-2.5 border border-slate-200 bg-slate-100 rounded-lg text-center font-bold text-slate-400" readonly>
                   </div>
                </div>
             </div>
  
             <div>
-               <label class="text-xs font-bold text-brand-blue uppercase border-b border-slate-100 block pb-2 mb-4">Selección de Acabados (S/m²)</label>
+               <label class="text-[10px] font-bold text-brand-blue uppercase border-b border-slate-100 block pb-1 mb-3">Acabados (S/m²)</label>
                <div id="t3_cats_container" class="space-y-4"></div>
             </div>
             
-            <div class="h-10 lg:hidden"></div>
-         </div>
-         
-         <div class="p-4 bg-slate-50 border-t border-slate-200">
-           <button onclick="t3_reset()" class="w-full py-3 bg-white border border-slate-200 text-slate-500 rounded-xl text-xs font-bold hover:bg-brand-red hover:text-white hover:border-brand-red transition-colors shadow-sm">
-             REINICIAR CÁLCULO
-           </button>
+            <button onclick="t3_reset()" class="w-full py-3 bg-white border border-slate-200 text-slate-500 rounded-xl text-xs font-bold hover:bg-brand-red hover:text-white hover:border-brand-red transition-colors shadow-sm">
+              REINICIAR CÁLCULO
+            </button>
          </div>
        </div>
  
-       <div class="lg:col-span-7 bg-slate-900 text-white rounded-2xl shadow-2xl p-8 flex flex-col justify-center items-center text-center h-full relative overflow-hidden border-t-8 border-brand-yellow">
+       <div class="fixed bottom-0 left-0 w-full bg-slate-900 border-t border-slate-700 shadow-[0_-5px_20px_rgba(0,0,0,0.3)] z-50 p-4 pb-8 safe-pb lg:hidden transition-transform duration-300">
+          <div class="flex justify-between items-end">
+             <div>
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">COSTO TOTAL OBRA</span>
+                <span class="text-xs text-brand-yellow font-semibold">Incl. IGV</span>
+             </div>
+             <div class="text-right">
+                <span class="text-lg font-bold text-slate-500 mr-1">S/</span>
+                <span id="t3_total_mob" class="text-3xl font-heading font-bold text-white">0.00</span>
+             </div>
+          </div>
+       </div>
+ 
+       <div class="hidden lg:flex lg:col-span-7 bg-slate-900 text-white rounded-2xl shadow-2xl p-8 flex-col justify-center items-center text-center sticky top-24 border-t-8 border-brand-yellow relative overflow-hidden">
          <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
          
-         <h4 class="text-brand-yellow font-heading text-3xl mb-10 tracking-[0.2em] relative z-10">COSTO TOTAL ESTIMADO</h4>
+         <h4 class="text-brand-yellow font-heading text-2xl mb-8 tracking-[0.2em] relative z-10">COSTO ESTIMADO</h4>
          
-         <div class="w-full max-w-lg space-y-6 text-sm mb-12 border-b border-white/10 pb-10 relative z-10">
+         <div class="w-full max-w-md space-y-4 text-sm mb-10 border-b border-white/10 pb-8 relative z-10">
             <div class="flex justify-between items-end border-b border-white/5 pb-2">
               <span class="text-slate-400">Costo Directo</span>
-              <span id="t3_cd" class="font-mono font-bold text-xl">S/ 0.00</span>
+              <span id="t3_cd" class="font-mono font-bold text-lg">S/ 0.00</span>
             </div>
             <div class="flex justify-between items-end border-b border-white/5 pb-2">
               <span class="text-slate-500 text-xs uppercase">Gastos Grales. + Utilidad</span>
               <span id="t3_gg_util" class="font-mono text-slate-300">S/ 0.00</span>
-            </div>
-            <div class="flex justify-between items-end border-b border-white/5 pb-2">
-              <span class="text-slate-300 font-bold">Subtotal</span>
-              <span id="t3_sub" class="font-mono font-bold text-lg text-slate-200">S/ 0.00</span>
             </div>
             <div class="flex justify-between items-end pt-2">
               <span class="text-brand-yellow text-xs font-bold uppercase">Impuesto General (IGV)</span>
@@ -442,33 +480,36 @@
             </div>
          </div>
          
-         <div class="relative z-10 scale-100 md:scale-110 transform transition-transform duration-500">
-            <span class="text-4xl text-slate-600 font-serif align-top mr-2">S/.</span>
-            <span id="t3_total" class="text-7xl font-bold font-heading text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">0.00</span>
+         <div class="relative z-10 scale-110">
+            <span class="text-3xl text-slate-600 font-serif align-top mr-2">S/.</span>
+            <span id="t3_total" class="text-6xl font-bold font-heading text-white">0.00</span>
          </div>
          
-         <p class="text-[10px] text-slate-500 mt-12 max-w-md mx-auto relative z-10 leading-relaxed">
-           * Este presupuesto es referencial y está basado en los Valores Unitarios Oficiales de Edificación para Lima Metropolitana y Callao vigentes a Diciembre 2025.
+         <p class="text-[10px] text-slate-500 mt-8 max-w-sm mx-auto relative z-10 leading-relaxed">
+           * Presupuesto referencial basado en Valores Unitarios Oficiales (Lima Metro y Callao, Dic 2025).
          </p>
        </div>
     </div>
   </div>
  
   <script>
-    /* -------------------------------------------------------------------------- */
     /* LÓGICA DE NAVEGACIÓN */
-    /* -------------------------------------------------------------------------- */
-    function switchView(id) { document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
+    function switchView(id) { 
+        document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active')); 
+        document.getElementById(id).classList.add('active'); 
+        window.scrollTo(0,0); 
+    }
     function goHome() { switchView('view-landing'); }
  
-    /* -------------------------------------------------------------------------- */
-    /* T1: ARANCELES (Mantiene lógica original de fetch GeoJSON) */
-    /* -------------------------------------------------------------------------- */
+    /* T1: ARANCELES */
     let allFeatures = [];
     function initT1() {
        fetch('distritos_mef_2026_con_zip.geojson')
-        .then(r => r.json()).then(data => { allFeatures = data.features; document.getElementById('t1_list').innerHTML = '<div class="h-full flex flex-col items-center justify-center opacity-40"><i class="fa-solid fa-check-circle text-4xl mb-3 text-green-500"></i><p class="text-slate-400 font-medium text-xs">Base de datos lista.</p></div>'; })
-        .catch(e => document.getElementById('t1_list').innerHTML = '<div class="text-center p-8 text-brand-red text-xs font-bold bg-red-50 rounded-lg">⚠️ Archivo GeoJSON no encontrado.<br>Verifique la conexión.</div>');
+        .then(r => r.json()).then(data => { 
+            allFeatures = data.features; 
+            document.getElementById('t1_list').innerHTML = '<div class="h-full flex flex-col items-center justify-center opacity-40"><i class="fa-solid fa-check-circle text-4xl mb-3 text-green-500"></i><p class="text-slate-400 font-medium text-xs">Base de datos cargada.</p></div>'; 
+        })
+        .catch(e => document.getElementById('t1_list').innerHTML = '<div class="text-center p-6 text-brand-red text-xs font-bold bg-red-50 rounded-lg">⚠️ Error al cargar datos.<br>Revise su conexión.</div>');
        
        document.getElementById('t1_search').addEventListener('input', (e) => {
            const q = e.target.value.toUpperCase();
@@ -476,361 +517,89 @@
            const res = allFeatures.filter(f => (f.properties.distrito||"").includes(q) || (f.properties.ubigeo||"").startsWith(q)).slice(0,50);
            
            document.getElementById('t1_list').innerHTML = res.map(r => `
-             <div class="bg-white border border-slate-100 p-4 rounded-xl mb-2 shadow-sm hover:shadow-md transition-shadow flex justify-between items-center group">
+             <div class="bg-white border border-slate-100 p-4 rounded-xl mb-2 shadow-sm flex justify-between items-center group active:scale-[0.98] transition-transform">
                <div>
-                 <div class="font-bold text-brand-blue text-sm group-hover:text-brand-red transition-colors"><i class="fa-solid fa-location-dot mr-2 text-slate-300"></i>${r.properties.distrito}</div>
-                 <div class="text-[10px] text-slate-400 font-mono mt-1 ml-5">UBIGEO: ${r.properties.ubigeo}</div>
+                 <div class="font-bold text-brand-blue text-sm"><i class="fa-solid fa-location-dot mr-2 text-brand-red"></i>${r.properties.distrito}</div>
+                 <div class="text-[10px] text-slate-400 font-mono mt-1 ml-6">UBIGEO: ${r.properties.ubigeo}</div>
                </div>
-               ${r.properties.mef_zip_url ? `<a href="${r.properties.mef_zip_url}" target="_blank" class="text-[10px] bg-brand-red hover:bg-red-700 text-white px-4 py-2 rounded-lg font-bold shadow-md transition-all flex items-center gap-2"><i class="fa-solid fa-download"></i> PLANO</a>`:''}
+               ${r.properties.mef_zip_url ? `<a href="${r.properties.mef_zip_url}" target="_blank" class="w-10 h-10 bg-brand-red text-white rounded-lg flex items-center justify-center shadow-lg active:bg-brand-blue transition-colors"><i class="fa-solid fa-download"></i></a>`:''}
              </div>`).join('');
-           document.getElementById('t1_count').innerText = `${res.length} resultados`;
-        });
+           document.getElementById('t1_count').innerText = res.length;
+       });
     }
-    window.addEventListener('load', initT1);
  
-    /* -------------------------------------------------------------------------- */
-    /* T2: EDIFICACIÓN (AUDITADO: VALORES OFICIALES 2026 - LIMA/COSTA/SIERRA/SELVA) */
-    /* -------------------------------------------------------------------------- */
-    /* Fuentes Actualizadas:
-       - Lima: Anexo I.1 
-       - Costa: Anexo I.2 
-       - Sierra: Anexo I.3 
-       - Selva: Anexo I.4 
-       - Obras: Anexos III.1, III.2, III.3, III.4 
-    */
- 
+    /* T2: DATA */
     const T2_CATS_FULL = [
-        {l:"1. Muros y Columnas",opts:[
-           {l:"A. Estructuras laminares de concreto armado...", v:{lima:976.30, costa:894.27, sierra:1010.95, selva:995.50}},
-           {l:"B. Columnas, vigas y/o placas de concreto armado...", v:{lima:629.46, costa:576.57, sierra:601.44, selva:679.21}},
-           {l:"C. Placas de concreto E= 10 a 15 cm...", v:{lima:422.98, costa:387.43, sierra:425.98, selva:489.75}},
-           {l:"D. Ladrillo o similar sin elementos de concreto...", v:{lima:409.04, costa:374.68, sierra:393.47, selva:378.67}},
-           {l:"E. Adobe, tapial o quincha.", v:{lima:287.96, costa:263.77, sierra:308.89, selva:300.68}},
-           {l:"F. Madera / Drywall (sin techo).", v:{lima:222.15, costa:198.64, sierra:192.61, selva:205.37}},
-           {l:"G. Pircado con mezcla de barro.", v:{lima:127.78, costa:117.05, sierra:113.49, selva:102.68}},
-           {l:"H. Madera Rústica", v:{lima:0, costa:0, sierra:25.67, selva:41.08}},
-           {l:"I. Caña Guayaquil, Pona o Pintoc", v:{lima:0, costa:0, sierra:0, selva:16.43}}
-        ]},
-        {l:"2. Techos",opts:[
-           {l:"A. Losa o aligerado de concreto armado luces > 6m...", v:{lima:592.97, costa:543.16, sierra:525.66, selva:509.83}},
-           {l:"B. Aligerados o losas inclinadas.", v:{lima:386.87, costa:354.37, sierra:361.40, selva:360.15}},
-           {l:"C. Aligerado o losas horizontales.", v:{lima:312.01, costa:285.80, sierra:246.87, selva:265.25}},
-           {l:"D. Calamina metálica fibrocemento.", v:{lima:198.04, costa:181.40, sierra:251.48, selva:231.25}},
-           {l:"E. Madera con material impermeabilizante.", v:{lima:73.83, costa:67.63, sierra:76.73, selva:168.37}},
-           {l:"F. Calamina metálica madera corriente.", v:{lima:41.60, costa:37.19, sierra:61.30, selva:60.91}},
-           {l:"G. Madera rústica o caña con torta de barro", v:{lima:27.91, costa:25.57, sierra:0, selva:77.41}},
-           {l:"H. Sin techo.", v:{lima:0, costa:0, sierra:0, selva:0}}
-        ]},
-        {l:"3. Puertas y Ventanas",opts:[
-           {l:"A. Aluminio pesado / Madera fina ornamental.", v:{lima:529.84, costa:485.33, sierra:399.00, selva:421.72}},
-           {l:"B. Aluminio o madera fina diseño especial.", v:{lima:279.28, costa:255.81, sierra:353.08, selva:334.51}},
-           {l:"C. Aluminio o madera fina vidrio polarizado.", v:{lima:176.22, costa:161.41, sierra:167.13, selva:248.79}},
-           {l:"D. Ventanas aluminio, puertas madera selecta.", v:{lima:154.35, costa:141.39, sierra:147.50, selva:166.76}},
-           {l:"E. Ventanas fierro, puertas madera selecta.", v:{lima:132.06, costa:120.98, sierra:112.67, selva:108.28}},
-           {l:"F. Ventanas fierro industrial / puertas fierro.", v:{lima:101.56, costa:90.81, sierra:87.12, selva:88.32}},
-           {l:"G. Madera corriente.", v:{lima:53.56, costa:49.05, sierra:51.34, selva:52.11}},
-           {l:"H. Madera Rústica", v:{lima:26.78, costa:24.53, sierra:25.67, selva:26.06}},
-           {l:"I. Sin puertas ni ventanas.", v:{lima:0, costa:0, sierra:0, selva:0}}
-        ]}
+        {l:"1. Muros y Columnas",opts:[{l:"A. Estructuras laminares...",v:{lima:976.30,costa:894.27,sierra:1010.95,selva:995.50}},{l:"B. Columnas, vigas...",v:{lima:629.46,costa:576.57,sierra:601.44,selva:679.21}},{l:"C. Placas concreto...",v:{lima:422.98,costa:387.43,sierra:425.98,selva:489.75}},{l:"D. Ladrillo s/confinar...",v:{lima:409.04,costa:374.68,sierra:393.47,selva:378.67}},{l:"E. Adobe, tapial...",v:{lima:287.96,costa:263.77,sierra:308.89,selva:300.68}},{l:"F. Madera / Drywall...",v:{lima:222.15,costa:198.64,sierra:192.61,selva:205.37}},{l:"G. Pircado con barro",v:{lima:127.78,costa:117.05,sierra:113.49,selva:102.68}}]},
+        {l:"2. Techos",opts:[{l:"A. Losa > 6m...",v:{lima:592.97,costa:543.16,sierra:525.66,selva:509.83}},{l:"B. Aligerados inclinados...",v:{lima:386.87,costa:354.37,sierra:361.40,selva:360.15}},{l:"C. Aligerado horizontal...",v:{lima:312.01,costa:285.80,sierra:246.87,selva:265.25}},{l:"D. Calamina metálica...",v:{lima:198.04,costa:181.40,sierra:251.48,selva:231.25}},{l:"E. Madera impermeab...",v:{lima:73.83,costa:67.63,sierra:76.73,selva:168.37}},{l:"F. Calamina madera...",v:{lima:41.60,costa:37.19,sierra:61.30,selva:60.91}},{l:"G. Madera rústica...",v:{lima:27.91,costa:25.57,sierra:0,selva:77.41}}]},
+        {l:"3. Puertas y Ventanas",opts:[{l:"A. Aluminio pesado...",v:{lima:529.84,costa:485.33,sierra:399.00,selva:421.72}},{l:"B. Aluminio diseño...",v:{lima:279.28,costa:255.81,sierra:353.08,selva:334.51}},{l:"C. Aluminio, vidrio...",v:{lima:176.22,costa:161.41,sierra:167.13,selva:248.79}},{l:"D. Ventanas aluminio...",v:{lima:154.35,costa:141.39,sierra:147.50,selva:166.76}},{l:"E. Ventanas fierro...",v:{lima:132.06,costa:120.98,sierra:112.67,selva:108.28}},{l:"F. Fierro industrial...",v:{lima:101.56,costa:90.81,sierra:87.12,selva:88.32}},{l:"G. Madera corriente...",v:{lima:53.56,costa:49.05,sierra:51.34,selva:52.11}}]}
     ];
+    const OBRAS_96 = [{n:"Muro concreto (m2)",p:{lima:453.45,costa:443.89,sierra:444.14,selva:457.72}},{n:"Muro ladrillo (m2)",p:{lima:383.77,costa:375.68,sierra:375.89,selva:387.38}},{n:"Cerco fierro (m2)",p:{lima:206.30,costa:201.95,sierra:202.06,selva:208.24}},{n:"Puerta fierro (m2)",p:{lima:618.00,costa:604.98,sierra:605.31,selva:623.83}},{n:"Tanque Elevado (m3)",p:{lima:1316.09,costa:1288.35,sierra:1289.07,selva:1328.49}},{n:"Cisterna (m3)",p:{lima:1488.89,costa:1457.50,sierra:1458.31,selva:1502.91}}];
+    const DEPREC_TABLE = {'concreto':[{max:5,vals:[0,5,10,55]},{max:50,vals:[18,23,28,73]},{max:999,vals:[27,35,47,87]}],'adobe':[{max:5,vals:[5,15,30,65]},{max:999,vals:[40,50,65,95]}]};
  
-    const OBRAS_96 = [
-        {n:"1. Muro concreto armado (m2)", p:{lima:453.45,costa:443.89,sierra:444.14,selva:457.72}}, 
-        {n:"2. Muro traslúcido (m2)", p:{lima:417.73,costa:408.92,sierra:409.15,selva:421.66}}, 
-        {n:"3. Muro ladrillo tarrajeado soga >2.40m (m2)", p:{lima:383.77,costa:375.68,sierra:375.89,selva:387.38}}, 
-        {n:"4. Muro ladrillo tarrajeado soga <=2.40m (m2)", p:{lima:336.07,costa:328.99,sierra:329.17,selva:339.24}}, 
-        {n:"5. Muro ladrillo solaqueado (m2)", p:{lima:281.01,costa:275.09,sierra:275.24,selva:283.66}}, 
-        {n:"6. Cerco fierro/aluminio (m2)", p:{lima:206.30,costa:201.95,sierra:202.06,selva:208.24}}, 
-        {n:"7. Muro ladrillo soga cimentación (m2)", p:{lima:235.30,costa:230.34,sierra:230.47,selva:237.52}}, 
-        {n:"8. Muro adobe/quincha (m2)", p:{lima:150.76,costa:147.58,sierra:147.66,selva:152.18}}, 
-        {n:"9. Muro ladrillo cabeza (m2)", p:{lima:408.56,costa:399.95,sierra:400.17,selva:412.41}}, 
-        {n:"10. Puerta fierro/aluminio (m2)", p:{lima:618.00,costa:604.98,sierra:605.31,selva:623.83}}, 
-        {n:"11. Puerta fierro plancha >2m (m2)", p:{lima:590.41,costa:577.96,sierra:578.28,selva:595.97}}, 
-        {n:"12. Portón fierro plancha 3-4m (m2)", p:{lima:427.48,costa:418.47,sierra:418.70,selva:468.54}}, 
-        {n:"13. Puerta madera h2.20 (m2)", p:{lima:449.15,costa:439.68,sierra:439.92,selva:483.88}}, 
-        {n:"14. Puerta madera ancho>2m (m2)", p:{lima:404.21,costa:395.68,sierra:395.90,selva:435.47}}, 
-        {n:"15. Portón fierro <=3m (m2)", p:{lima:360.87,costa:353.26,sierra:353.46,selva:394.83}}, 
-        {n:"16. Portón fierro >4m (m2)", p:{lima:321.02,costa:314.25,sierra:314.43,selva:351.30}}, 
-        {n:"17. Tanque elevado concreto <=5m3 (m3)", p:{lima:1316.09,costa:1288.35,sierra:1289.07,selva:1328.49}}, 
-        {n:"18. Tanque elevado plastico >1m3 (m3)", p:{lima:1439.21,costa:1408.88,sierra:1409.66,selva:1452.77}}, 
-        {n:"19. Tanque elevado concreto >5m3 (m3)", p:{lima:1103.04,costa:1079.79,sierra:1080.39,selva:1113.43}}, 
-        {n:"20. Tanque elevado concreto >15m3 (m3)", p:{lima:977.16,costa:956.56,sierra:957.09,selva:986.37}},
-        {n:"21. Tanque elevado plastico <=1m3 (m3)", p:{lima:1083.70,costa:1060.86,sierra:1061.45,selva:1093.91}}, 
-        {n:"22. Cisterna plastico >1m3 (m3)", p:{lima:1483.42,costa:1452.15,sierra:1452.95,selva:1497.39}}, 
-        {n:"23. Cisterna concreto <=5m3 (m3)", p:{lima:1488.89,costa:1457.50,sierra:1458.31,selva:1502.91}}, 
-        {n:"24. Cisterna concreto <=10m3 (m3)", p:{lima:1241.37,costa:1215.21,sierra:1215.88,selva:1253.07}}, 
-        {n:"25. Cisterna concreto <=20m3 (m3)", p:{lima:1092.61,costa:1069.58,sierra:1070.17,selva:1102.90}}, 
-        {n:"26. Cisterna ladrillo <=5m3 (m3)", p:{lima:1176.91,costa:1152.10,sierra:1152.74,selva:1188.00}}, 
-        {n:"27. Cisterna concreto >20m3 (m3)", p:{lima:901.92,costa:882.91,sierra:883.40,selva:910.42}}, 
-        {n:"28. Tanque plastico <=1m3 (m3)", p:{lima:904.36,costa:885.30,sierra:885.79,selva:912.88}}, 
-        {n:"29. Piscina concreto <=5m3 (m3)", p:{lima:1483.41,costa:1452.14,sierra:1452.94,selva:1497.38}}, 
-        {n:"30. Piscina concreto <=10m3 (m3)", p:{lima:1236.70,costa:1210.63,sierra:1211.30,selva:1248.35}},
-        {n:"31. Piscina concreto >10m3 (m3)", p:{lima:1182.92,costa:1157.99,sierra:1158.63,selva:1194.07}}, 
-        {n:"32. Piscina ladrillo (m3)", p:{lima:1019.30,costa:997.81,sierra:998.37,selva:1028.90}}, 
-        {n:"33. Losa concreto 4\" (m2)", p:{lima:170.50,costa:166.91,sierra:167.00,selva:172.11}}, 
-        {n:"34. Asfalto 2\" (m2)", p:{lima:141.85,costa:138.86,sierra:138.93,selva:143.18}}, 
-        {n:"35. Losa concreto simple 4\" (m2)", p:{lima:136.11,costa:133.25,sierra:133.32,selva:137.40}}, 
-        {n:"36. Vereda concreto 4\" (m2)", p:{lima:107.31,costa:105.05,sierra:105.10,selva:108.32}}, 
-        {n:"37. Horno concreto (m3)", p:{lima:1596.70,costa:1563.04,sierra:1563.91,selva:1611.74}}, 
-        {n:"38. Horno ladrillo (m3)", p:{lima:1346.81,costa:1318.42,sierra:1319.15,selva:1359.50}}, 
-        {n:"39. Horno adobe (m3)", p:{lima:402.14,costa:393.67,sierra:393.88,selva:405.93}}, 
-        {n:"40. Torre vigilancia c/torre (und)", p:{lima:7081.57,costa:6932.30,sierra:6936.14,selva:7148.29}},
-        {n:"41. Torre vigilancia s/torre (und)", p:{lima:4208.44,costa:4119.73,sierra:4122.01,selva:4248.09}}, 
-        {n:"42. Boveda concreto (m3)", p:{lima:1529.53,costa:1497.29,sierra:1498.12,selva:1543.94}}, 
-        {n:"43. Balanza industrial (m3)", p:{lima:869.64,costa:851.31,sierra:851.78,selva:877.84}}, 
-        {n:"44. Poste concreto reflector (und)", p:{lima:2583.43,costa:2528.97,sierra:2530.37,selva:2607.76}}, 
-        {n:"45. Dados concreto (m3)", p:{lima:1808.83,costa:1770.71,sierra:1771.69,selva:1825.88}}, 
-        {n:"46. Caja registro 24x24 (und)", p:{lima:342.64,costa:335.41,sierra:335.60,selva:345.86}}, 
-        {n:"47. Caja registro 12x24 (und)", p:{lima:332.67,costa:325.66,sierra:325.84,selva:335.80}}, 
-        {n:"48. Caja registro 10x20 (und)", p:{lima:284.29,costa:278.30,sierra:278.46,selva:286.97}}, 
-        {n:"49. Buzon concreto (und)", p:{lima:2518.08,costa:2465.00,sierra:2466.37,selva:2541.80}}, 
-        {n:"50. Parapeto cabeza tarrajeado (m2)", p:{lima:243.42,costa:238.29,sierra:238.42,selva:245.71}},
-        {n:"51. Parapeto soga tarrajeado (m2)", p:{lima:197.06,costa:192.91,sierra:193.01,selva:198.92}}, 
-        {n:"52. Parapeto cabeza caravista (m2)", p:{lima:169.09,costa:165.52,sierra:180.02,selva:170.68}}, 
-        {n:"53. Parapeto soga caravista (m2)", p:{lima:111.12,costa:108.78,sierra:108.84,selva:112.17}}, 
-        {n:"54. Escalera concreto c/acab (m3)", p:{lima:6133.92,costa:6004.63,sierra:6007.96,selva:6191.71}}, 
-        {n:"55. Escalera concreto s/acab (m3)", p:{lima:4954.27,costa:4849.84,sierra:4852.53,selva:5000.95}}, 
-        {n:"56. Rampa concreto c/encofrado (m3)", p:{lima:2126.08,costa:2081.27,sierra:2082.42,selva:2146.11}}, 
-        {n:"57. Rampa concreto s/encofrado (m3)", p:{lima:1735.70,costa:1699.11,sierra:1700.05,selva:1752.05}}, 
-        {n:"58. Muro contencion h1.40 e20 (m3)", p:{lima:1516.06,costa:1484.10,sierra:1484.92,selva:1530.34}}, 
-        {n:"59. Muro contencion h2.50 e20 (m3)", p:{lima:1345.55,costa:1317.19,sierra:1317.92,selva:1358.23}}, 
-        {n:"60. Muro contencion h4.00 e20 (m3)", p:{lima:1317.51,costa:1289.74,sierra:1290.45,selva:1329.92}},
-        {n:"61. Muro contencion h1.40 e15 (m3)", p:{lima:1313.51,costa:1285.82,sierra:1286.53,selva:1325.88}}, 
-        {n:"62. Muro contencion h2.50 e15 (m3)", p:{lima:1125.98,costa:1102.24,sierra:1102.86,selva:1136.59}}, 
-        {n:"63. Muro contencion h4.00 e15 (m3)", p:{lima:1091.29,costa:1068.29,sierra:1068.88,selva:1101.58}}, 
-        {n:"64. Escalera caracol h6.00 (und)", p:{lima:9041.42,costa:8850.84,sierra:8855.75,selva:9126.61}}, 
-        {n:"65. Escalera caracol h3.00 (und)", p:{lima:4749.91,costa:4649.79,sierra:4652.37,selva:4794.66}}, 
-        {n:"66. Escalera caracol entre pisos (und)", p:{lima:4291.51,costa:4201.05,sierra:4203.38,selva:4331.95}}, 
-        {n:"67. Pastoral h2.20 (und)", p:{lima:519.47,costa:508.52,sierra:508.80,selva:524.37}}, 
-        {n:"68. Proyector sodio 250W (und)", p:{lima:1054.39,costa:1032.16,sierra:1032.74,selva:1064.32}}, 
-        {n:"69. Proyector mercurio 150W (und)", p:{lima:980.80,costa:960.13,sierra:960.66,selva:990.04}}, 
-        {n:"70. Tuberia concreto D1.20 (ml)", p:{lima:583.29,costa:570.99,sierra:571.31,selva:588.78}},
-        {n:"71. Tuberia concreto D18\" (ml)", p:{lima:369.50,costa:361.71,sierra:361.91,selva:372.98}}, 
-        {n:"72. Canaleta concreto (ml)", p:{lima:82.97,costa:81.22,sierra:81.27,selva:83.75}}, 
-        {n:"73. Zanja concreto (ml)", p:{lima:926.72,costa:907.19,sierra:907.69,selva:935.45}}, 
-        {n:"74. Poste concreto h12 (pza)", p:{lima:5117.80,costa:5009.92,sierra:5012.70,selva:5166.01}}, 
-        {n:"75. Poste concreto h11 (pza)", p:{lima:4199.26,costa:4110.74,sierra:4113.02,selva:4238.82}}, 
-        {n:"76. Poste concreto h10 (pza)", p:{lima:3629.07,costa:3552.58,sierra:3554.55,selva:3663.26}}, 
-        {n:"77. Poste concreto h9 (pza)", p:{lima:3001.16,costa:2937.90,sierra:2939.53,selva:3029.44}}, 
-        {n:"78. Poste concreto h8 (pza)", p:{lima:2583.43,costa:2528.97,sierra:2530.37,selva:2607.76}}, 
-        {n:"79. Poste concreto h7 (pza)", p:{lima:2110.21,costa:2065.73,sierra:2066.88,selva:2130.10}}, 
-        {n:"80. Poste concreto h3 (pza)", p:{lima:964.46,costa:944.13,sierra:944.66,selva:973.55}},
-        {n:"81. Cubierta tejas arcilla (m2)", p:{lima:134.24,costa:140.27,sierra:142.91,selva:144.61}}, 
-        {n:"82. Cubierta ladrillo pastelero 1:5 (m2)", p:{lima:77.08,costa:75.46,sierra:75.50,selva:77.81}}, 
-        {n:"83. Cubierta ladrillo pastelero barro (m2)", p:{lima:73.84,costa:72.28,sierra:72.32,selva:74.53}}, 
-        {n:"84. Cubierta torta barro (m2)", p:{lima:42.02,costa:41.13,sierra:41.16,selva:42.42}}, 
-        {n:"85. Pasamano tubo 3\" (ml)", p:{lima:412.34,costa:403.64,sierra:403.87,selva:416.22}}, 
-        {n:"86. Pasamano tubo 2\" (ml)", p:{lima:225.61,costa:220.85,sierra:220.98,selva:227.74}}, 
-        {n:"87. Pasamano tubo 1\" (ml)", p:{lima:171.03,costa:167.42,sierra:167.52,selva:172.64}}, 
-        {n:"88. Cerco malla #8 (m2)", p:{lima:242.15,costa:237.04,sierra:237.18,selva:244.43}}, 
-        {n:"89. Cerco malla #10 (m2)", p:{lima:224.45,costa:219.72,sierra:219.84,selva:226.56}}, 
-        {n:"90. Cerco malla #12 (m2)", p:{lima:201.44,costa:197.19,sierra:197.30,selva:203.34}},
-        {n:"91. Poste fierro h4 (pza)", p:{lima:535.62,costa:524.33,sierra:524.62,selva:540.66}}, 
-        {n:"92. Poste fierro h2.50 (pza)", p:{lima:313.28,costa:306.68,sierra:306.85,selva:316.23}}, 
-        {n:"93. Sardinel s/pintura (ml)", p:{lima:128.50,costa:125.79,sierra:125.86,selva:129.71}}, 
-        {n:"94. Sardinel c/pintura (ml)", p:{lima:141.17,costa:138.19,sierra:138.27,selva:142.50}}, 
-        {n:"95. Pista concreto 6\" (m2)", p:{lima:197.92,costa:193.75,sierra:193.86,selva:199.78}}, 
-        {n:"96. Trampa grasa (m3)", p:{lima:1356.39,costa:1327.80,sierra:1328.54,selva:1369.17}}
-    ];
- 
-    /* !!! DEPRECIACIÓN - TABLA 01 VIVIENDA (RM N° 172-2016-VIVIENDA) - MANTENIDA SEGÚN INSTRUCCIÓN !!! */
-    const DEPREC_TABLE = {
-        'concreto': [ 
-            { max: 5,  vals: [0, 5, 10, 55] },
-            { max: 10, vals: [0, 5, 10, 55] },
-            { max: 15, vals: [3, 8, 13, 58] },
-            { max: 20, vals: [6, 11, 16, 61] },
-            { max: 25, vals: [8, 13, 18, 63] },
-            { max: 30, vals: [10, 15, 20, 65] },
-            { max: 35, vals: [12, 17, 22, 67] },
-            { max: 40, vals: [14, 19, 24, 69] },
-            { max: 45, vals: [16, 21, 26, 71] },
-            { max: 50, vals: [18, 23, 28, 73] },
-            { max: 999, vals: [27, 35, 47, 87] } 
-        ],
-        'adobe': [ 
-            { max: 5,  vals: [5, 15, 30, 65] },
-            { max: 10, vals: [10, 20, 35, 70] },
-            { max: 15, vals: [15, 25, 40, 75] },
-            { max: 20, vals: [20, 30, 45, 80] },
-            { max: 25, vals: [25, 35, 50, 85] },
-            { max: 30, vals: [30, 40, 55, 90] },
-            { max: 999, vals: [40, 50, 65, 95] } 
-        ]
-    };
- 
-    // --- FUNCIONES T2 ---
     let t2_added = [];
     
     function t2_refresh() {
        const reg = document.getElementById('t2_region').value;
        document.getElementById('t2_cats_list').innerHTML = '';
-       
        T2_CATS_FULL.forEach(c => {
-          let ops = `<option value="0">-- No Aplica --</option>`;
-          c.opts.forEach(o => { 
-             if(o.v[reg]!==undefined) ops+=`<option value="${o.v[reg]}">${o.l.substring(0,55)}... S/${o.v[reg].toFixed(2)}</option>`; 
-          });
-          document.getElementById('t2_cats_list').innerHTML += `
-            <div class="mb-3">
-              <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">${c.l}</label>
-              <select class="t2-sel w-full p-2.5 border border-slate-200 rounded-lg text-xs font-medium bg-slate-50 focus:bg-white text-brand-blue" onchange="t2_calc()">${ops}</select>
-            </div>`;
+          let ops = `<option value="0">-- Seleccionar --</option>`;
+          c.opts.forEach(o => { if(o.v[reg]!==undefined) ops+=`<option value="${o.v[reg]}">${o.l.substring(0,30)}... (S/${o.v[reg].toFixed(2)})</option>`; });
+          document.getElementById('t2_cats_list').innerHTML += `<div class="mb-3"><label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">${c.l}</label><select class="t2-sel w-full p-3 border border-slate-200 rounded-lg text-sm font-medium bg-slate-50 focus:bg-white text-brand-blue" onchange="t2_calc()">${ops}</select></div>`;
        });
-       
        document.getElementById('t2_obra_sel').innerHTML = OBRAS_96.map(o=>`<option value="${o.p[reg]}">${o.n} - S/${o.p[reg].toFixed(2)}</option>`).join('');
        t2_calc();
     }
  
     function t2_calc() {
-       let u = 0; 
-       document.querySelectorAll('.t2-sel').forEach(s => u += parseFloat(s.value));
-       
-       // Obtener variables de depreciación
+       let u = 0; document.querySelectorAll('.t2-sel').forEach(s => u += parseFloat(s.value));
        const age = parseInt(document.getElementById('t2_ant').value) || 0;
        const mat = document.getElementById('t2_mat').value;
        const est = parseInt(document.getElementById('t2_est').value);
        
-       // LÓGICA CORREGIDA: Búsqueda en Matriz
-       let dep = 0;
+       let dep = 50;
        const table = DEPREC_TABLE[mat] || DEPREC_TABLE['concreto'];
-       const range = table.find(r => age <= r.max);
-       if(range && range.vals[est] !== undefined) {
-          dep = range.vals[est];
-       } else {
-          dep = 50; // Fallback
-       }
- 
-       document.getElementById('t2_deprec_val').innerText = dep + "%";
+       const range = table.find(r => age <= r.max) || table[table.length-1];
+       if(range && range.vals[est] !== undefined) dep = range.vals[est];
        
        const area = parseFloat(document.getElementById('t2_area').value) || 0;
        const valEdif = u * area * (1 - dep/100);
        const valObras = t2_added.reduce((a,b)=>a+b.t,0);
        const valTerr = parseFloat(document.getElementById('t2_val_terreno').value)||0;
+       const total = valEdif+valObras+valTerr;
        
-       document.getElementById('res_edif').innerText = "S/ " + valEdif.toLocaleString('es-PE', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-       document.getElementById('res_obras').innerText = "S/ " + valObras.toLocaleString('es-PE', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-       document.getElementById('res_terreno').innerText = "S/ " + valTerr.toLocaleString('es-PE', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-       document.getElementById('res_total').innerText = (valEdif+valObras+valTerr).toLocaleString('es-PE', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+       // Update Desktop
+       document.getElementById('res_edif').innerText = "S/ " + valEdif.toLocaleString('es-PE', {minimumFractionDigits: 2});
+       document.getElementById('res_obras').innerText = "S/ " + valObras.toLocaleString('es-PE', {minimumFractionDigits: 2});
+       document.getElementById('res_terreno').innerText = "S/ " + valTerr.toLocaleString('es-PE', {minimumFractionDigits: 2});
+       document.getElementById('res_total').innerText = total.toLocaleString('es-PE', {minimumFractionDigits: 2});
        
-       const unitario = area > 0 ? (valEdif+valObras)/area : 0;
-       document.getElementById('res_unit').innerText = unitario.toLocaleString('es-PE', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+       // Update Mobile Floating Bar
+       document.getElementById('res_total_mob').innerText = total.toLocaleString('es-PE', {minimumFractionDigits: 2});
+       const unit = area > 0 ? (valEdif+valObras)/area : 0;
+       document.getElementById('res_unit').innerText = unit.toLocaleString('es-PE', {minimumFractionDigits: 2});
+       document.getElementById('res_unit_mob').innerText = unit.toLocaleString('es-PE', {minimumFractionDigits: 2});
     }
  
     function t2_addObra() {
        const s=document.getElementById('t2_obra_sel'), q=document.getElementById('t2_obra_qty').value;
-       if(q>0) {
-         t2_added.push({id:Date.now(), n:s.options[s.selectedIndex].text, q, t:s.value*q}); 
-         renderAdded(); t2_calc(); 
-       }
+       if(q>0) { t2_added.push({id:Date.now(), n:s.options[s.selectedIndex].text, q, t:s.value*q}); renderAdded(); t2_calc(); }
     }
-    
     function renderAdded() {
-      document.getElementById('t2_added_list').innerHTML = t2_added.map(x=>`<div class="text-[10px] flex justify-between bg-white p-2 border border-slate-100 rounded shadow-sm mb-1 items-center"><span>${x.n} <span class="bg-slate-200 px-1 rounded">x${x.q}</span></span><span class="font-bold text-brand-blue">S/${x.t.toFixed(2)}</span></div>`).join('');
+      document.getElementById('t2_added_list').innerHTML = t2_added.map(x=>`<div class="text-[11px] flex justify-between bg-white p-2.5 border border-slate-100 rounded-lg shadow-sm mb-2 items-center"><span>${x.n.split('-')[0]} <span class="bg-blue-50 text-brand-blue font-bold px-1.5 rounded ml-1">x${x.q}</span></span><span class="font-bold text-slate-700">S/${x.t.toFixed(2)}</span></div>`).join('');
     }
-    
-    function t2_reset() { 
-      t2_added=[]; renderAdded(); 
-      document.querySelectorAll('select').forEach(s=>s.selectedIndex=0); 
-      t2_refresh(); 
-    }
-    
-    // Auto-init
-    window.onload = function() { t2_refresh(); t3_init(); initT1(); };
+    function t2_reset() { t2_added=[]; renderAdded(); document.querySelectorAll('#view-edificacion select').forEach(s=>s.selectedIndex=0); t2_refresh(); }
  
-    /* -------------------------------------------------------------------------- */
-    /* T3: PRESUPUESTO (AUDITADO: VALORES DICIEMBRE 2025 LIMA) */
-    /* -------------------------------------------------------------------------- */
-    const T3_CATS = [
-       {l:"1. Muros y Columnas",opts:[
-           {l:"A. Estructuras laminares...",v:649.56},
-           {l:"B. Columnas, vigas...",v:418.80},
-           {l:"C. Placas concreto (Espesor 10-15cm)...",v:288.29},
-           {l:"D. Ladrillo s/confinar...",v:278.79},
-           {l:"E. Adobe, tapial...",v:196.26},
-           {l:"F. Madera / Drywall...",v:147.81},
-           {l:"G. Pircado con barro",v:87.09}
-       ]},
-       {l:"2. Techos",opts:[
-           {l:"A. Losa > 6m / Sobrecarga...",v:394.53},
-           {l:"B. Aligerados inclinados...",v:348.42},
-           {l:"C. Aligerado horizontal...",v:212.66},
-           {l:"D. Calamina metálica...",v:137.44},
-           {l:"E. Madera impermeab...",v:50.32},
-           {l:"F. Calamina madera...",v:27.67},
-           {l:"G. Madera rústica...",v:19.03},
-           {l:"H. Sin techo.",v:0.00}
-       ]},
-       {l:"3. Pisos",opts:[
-           {l:"A. Mármol importado, porcelanato...",v:257.40},
-           {l:"B. Mármol nacional, parquet fino...",v:208.83},
-           {l:"C. Parquet de 1ra, Laminado...",v:121.24},
-           {l:"D. Parquet de 2da, loseta veneciana...",v:81.23},
-           {l:"E. Loseta corriente, canto rodado...",v:55.47},
-           {l:"F. Loseta vinílica, cemento bruñado...",v:48.96},
-           {l:"G. Cemento pulido, ladrillo, entablado...",v:36.50},
-           {l:"H. Madera rústica...",v:26.06},
-           {l:"I. Tierra compactada...",v:0.00}
-       ]},
-       {l:"4. Puertas y Ventanas",opts:[
-           {l:"A. Aluminio pesado, madera fina...",v:379.97},
-           {l:"B. Aluminio diseño, vidrio tratado...",v:120.09},
-           {l:"C. Aluminio, vidrio polarizado...",v:105.20},
-           {l:"D. Ventanas aluminio, puertas selectas...",v:90.01},
-           {l:"E. Ventanas fierro, puertas selectas...",v:67.57},
-           {l:"F. Ventanas fierro industrial...",v:36.50},
-           {l:"G. Madera corriente, marcos PVC...",v:18.25},
-           {l:"H. Sin puertas.",v:0.00}
-       ]},
-       {l:"5. Revestimientos",opts:[
-           {l:"A. Mármol importado, madera fina...",v:352.52},
-           {l:"B. Mármol nacional, enchape techos...",v:287.88},
-           {l:"C. Superficie caravista, enchape techos...",v:213.57},
-           {l:"D. Enchape madera o laminados...",v:163.86},
-           {l:"E. Tarrajeo frotachado, pintura...",v:79.47},
-           {l:"F. Estucado yeso/barro...",v:65.16},
-           {l:"G. Pintado ladrillo rústico...",v:30.63},
-           {l:"H. Sin revestimiento...",v:10.87},
-           {l:"I. Sin...",v:0.00}
-       ]},
-       {l:"6. Baños",opts:[
-           {l:"A. Baños completos lujo importado...",v:185.81},
-           {l:"B. Baños completos importados...",v:97.49},
-           {l:"C. Baños completos nacionales...",v:67.63},
-           {l:"D. Baños nacionales blancos...",v:36.08},
-           {l:"E. Baños mayólica blanca parcial...",v:21.21},
-           {l:"F. Baños blancos sin mayólica...",v:15.81},
-           {l:"G. Sanitarios básicos...",v:6.13},
-           {l:"H. Sin aparatos...",v:0.00}
-       ]},
-       {l:"7. Instalaciones",opts:[
-           {l:"A. A/C, Iluminación especial...",v:376.82},
-           {l:"B. Bombeo, Ascensor, Teléfono...",v:275.13},
-           {l:"C. Agua F/C, Trifásica...",v:109.64},
-           {l:"D. Agua F/C, Monofásica...",v:79.63},
-           {l:"E. Agua F, Monofásica, Gas...",v:45.55},
-           {l:"F. Agua F, Monofásica...",v:42.26},
-           {l:"G. Agua F sin empotrar...",v:22.82},
-           {l:"H. Sin instalación...",v:0.00}
-       ]}
-    ];
+    /* T3: PRESUPUESTO */
+    const T3_CATS = [{l:"1. Muros y Columnas",opts:[{l:"A. Estructuras laminares...",v:649.56},{l:"B. Columnas, vigas...",v:418.80},{l:"C. Placas concreto...",v:288.29},{l:"D. Ladrillo s/confinar...",v:278.79}]},{l:"2. Techos",opts:[{l:"A. Losa > 6m...",v:394.53},{l:"B. Aligerados inclinados...",v:348.42},{l:"C. Aligerado horizontal...",v:212.66}]},{l:"3. Pisos",opts:[{l:"A. Mármol / Porcelanato...",v:257.40},{l:"B. Parquet fino...",v:208.83},{l:"C. Laminado / Cerámico...",v:121.24}]},{l:"4. Puertas y Ventanas",opts:[{l:"A. Aluminio pesado...",v:379.97},{l:"B. Vidrio tratado...",v:120.09},{l:"C. Vidrio polarizado...",v:105.20}]},{l:"5. Revestimientos",opts:[{l:"A. Mármol / Madera...",v:352.52},{l:"B. Enchape techos...",v:287.88},{l:"C. Caravista...",v:213.57}]},{l:"6. Baños",opts:[{l:"A. Lujo importado...",v:185.81},{l:"B. Importados...",v:97.49},{l:"C. Nacionales...",v:67.63}]},{l:"7. Instalaciones",opts:[{l:"A. A/C, Especiales...",v:376.82},{l:"B. Ascensor, Bombas...",v:275.13},{l:"C. Agua, Trifásica...",v:109.64}]}];
  
     function t3_init() {
-       const c = document.getElementById('t3_cats_container');
-       c.innerHTML = T3_CATS.map(x => `
-        <div class="mb-3">
-          <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">${x.l}</label>
-          <select class="t3-sel w-full p-2.5 border border-slate-200 rounded-lg text-xs font-medium text-slate-600 bg-slate-50" onchange="t3_calc()">
-            <option value="0">-- Seleccionar --</option>
-           ${x.opts.map(o=>`<option value="${o.v}">${o.l} S/${o.v.toFixed(2)}</option>`).join('')}
-          </select>
-        </div>`).join('');
+       document.getElementById('t3_cats_container').innerHTML = T3_CATS.map(x => `<div class="mb-3"><label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">${x.l}</label><select class="t3-sel w-full p-3 border border-slate-200 rounded-lg text-xs font-medium text-slate-600 bg-slate-50" onchange="t3_calc()"><option value="0">-- Seleccionar --</option>${x.opts.map(o=>`<option value="${o.v}">${o.l} S/${o.v.toFixed(2)}</option>`).join('')}</select></div>`).join('');
     }
  
     function t3_calc() {
        let u=0; document.querySelectorAll('.t3-sel').forEach(s=>u+=parseFloat(s.value));
-       const area=parseFloat(document.getElementById('t3_area').value)||0, pis=document.getElementById('t3_pisos').value,
-       gg=document.getElementById('t3_gg').value, util=document.getElementById('t3_util').value, igv=document.getElementById('t3_igv').value;
+       const area=parseFloat(document.getElementById('t3_area').value)||0, pis=document.getElementById('t3_pisos').value, gg=document.getElementById('t3_gg').value, util=document.getElementById('t3_util').value, igv=document.getElementById('t3_igv').value;
        
        const cd = u*area*(pis>=5?1.05:1);
        const sub = cd*(1+(parseFloat(gg)+parseFloat(util))/100);
@@ -838,12 +607,16 @@
        
        document.getElementById('t3_cd').innerText = "S/ "+cd.toLocaleString('es-PE',{minimumFractionDigits:2});
        document.getElementById('t3_gg_util').innerText = "S/ "+(cd*((parseFloat(gg)+parseFloat(util))/100)).toLocaleString('es-PE',{minimumFractionDigits:2});
-       document.getElementById('t3_sub').innerText = "S/ "+sub.toLocaleString('es-PE',{minimumFractionDigits:2});
+       // Desktop
        document.getElementById('t3_val_igv').innerText = "S/ "+(sub*(igv/100)).toLocaleString('es-PE',{minimumFractionDigits:2});
        document.getElementById('t3_total').innerText = tot.toLocaleString('es-PE',{minimumFractionDigits:2});
+       // Mobile Sticky
+       document.getElementById('t3_total_mob').innerText = tot.toLocaleString('es-PE',{minimumFractionDigits:2});
     }
- 
     function t3_reset() { document.querySelectorAll('.t3-sel').forEach(s=>s.selectedIndex=0); t3_calc(); }
+ 
+    // Init All
+    window.onload = function() { t2_refresh(); t3_init(); initT1(); };
   </script>
 </body>
 </html>
