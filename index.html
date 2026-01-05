@@ -112,9 +112,10 @@
  
     <footer class="bg-white text-slate-400 py-8 text-center border-t border-slate-100 mt-8">
       <div class="flex justify-center gap-6 mb-4 text-xl">
-         <a href="#" class="hover:text-brand-blue transition"><i class="fa-brands fa-facebook"></i></a>
-         <a href="#" class="hover:text-brand-red transition"><i class="fa-brands fa-youtube"></i></a>
-         <a href="#" class="hover:text-[#E1306C] transition"><i class="fa-brands fa-instagram"></i></a>
+         <a href="https://www.facebook.com/share/1Db3ZgmTE4/" target="_blank" class="hover:text-brand-blue transition"><i class="fa-brands fa-facebook"></i></a>
+         <a href="https://www.youtube.com/@laburbanrisk" target="_blank" class="hover:text-brand-red transition"><i class="fa-brands fa-youtube"></i></a>
+         <a href="https://www.instagram.com/laburbanrisk" target="_blank" class="hover:text-[#E1306C] transition"><i class="fa-brands fa-instagram"></i></a>
+         <a href="https://www.tiktok.com/@laburbanrisk" target="_blank" class="hover:text-black transition"><i class="fa-brands fa-tiktok"></i></a>
       </div>
       <p class="font-heading text-sm tracking-wider">LAB URBAN RISK &copy; 2026</p>
     </footer>
@@ -287,7 +288,7 @@
            <div class="bg-orange-50 p-5 rounded-xl border border-orange-100 flex items-center justify-between gap-4">
               <div class="flex-1">
                   <label class="text-xs font-bold text-orange-600 uppercase mb-1 block">D. Valor Terreno (S/)</label>
-                 <p class="text-[10px] text-orange-400">Ingrese el dato obtenido en Herramienta 1</p>
+                  <p class="text-[10px] text-orange-400">Ingrese el dato obtenido en Herramienta 1</p>
               </div>
               <div class="w-40">
                  <input type="number" id="t2_val_terreno" placeholder="0.00" oninput="t2_calc()" class="w-full p-3 border border-orange-200 rounded-lg text-right font-black text-xl text-slate-700 focus:ring-orange-200">
@@ -617,26 +618,26 @@
     /* !!! DEPRECIACIÓN - TABLA 01 VIVIENDA (RM N° 172-2016-VIVIENDA) - MANTENIDA SEGÚN INSTRUCCIÓN !!! */
     const DEPREC_TABLE = {
        'concreto': [ 
-            { max: 5,  vals: [0, 5, 10, 55] },
-            { max: 10, vals: [0, 5, 10, 55] },
-            { max: 15, vals: [3, 8, 13, 58] },
-            { max: 20, vals: [6, 11, 16, 61] },
-            { max: 25, vals: [8, 13, 18, 63] },
-            { max: 30, vals: [10, 15, 20, 65] },
-            { max: 35, vals: [12, 17, 22, 67] },
-            { max: 40, vals: [14, 19, 24, 69] },
-            { max: 45, vals: [16, 21, 26, 71] },
-            { max: 50, vals: [18, 23, 28, 73] },
-            { max: 999, vals: [27, 35, 47, 87] } 
+             { max: 5,  vals: [0, 5, 10, 55] },
+             { max: 10, vals: [0, 5, 10, 55] },
+             { max: 15, vals: [3, 8, 13, 58] },
+             { max: 20, vals: [6, 11, 16, 61] },
+             { max: 25, vals: [8, 13, 18, 63] },
+             { max: 30, vals: [10, 15, 20, 65] },
+             { max: 35, vals: [12, 17, 22, 67] },
+             { max: 40, vals: [14, 19, 24, 69] },
+             { max: 45, vals: [16, 21, 26, 71] },
+             { max: 50, vals: [18, 23, 28, 73] },
+             { max: 999, vals: [27, 35, 47, 87] } 
         ],
         'adobe': [ 
-            { max: 5,  vals: [5, 15, 30, 65] },
-            { max: 10, vals: [10, 20, 35, 70] },
-            { max: 15, vals: [15, 25, 40, 75] },
-            { max: 20, vals: [20, 30, 45, 80] },
-            { max: 25, vals: [25, 35, 50, 85] },
-            { max: 30, vals: [30, 40, 55, 90] },
-            { max: 999, vals: [40, 50, 65, 95] } 
+             { max: 5,  vals: [5, 15, 30, 65] },
+             { max: 10, vals: [10, 20, 35, 70] },
+             { max: 15, vals: [15, 25, 40, 75] },
+             { max: 20, vals: [20, 30, 45, 80] },
+             { max: 25, vals: [25, 35, 50, 85] },
+             { max: 30, vals: [30, 40, 55, 90] },
+             { max: 999, vals: [40, 50, 65, 95] } 
         ]
     };
  
@@ -805,7 +806,7 @@
             <option value="0">-- Seleccionar --</option>
            ${x.opts.map(o=>`<option value="${o.v}">${o.l} S/${o.v.toFixed(2)}</option>`).join('')}
           </select>
-        </div>`).join('');
+         </div>`).join('');
     }
  
     function t3_calc() {
